@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import ProgressDashboard from "@/components/ProgressDashboard";
 import PrerequisiteChain from "@/components/PrerequisiteChain";
+import QuestionHistory from "@/components/QuestionHistory";
+import ConceptReview from "@/components/ConceptReview";
+import PersonalizedExplanation from "@/components/PersonalizedExplanation";
+import EnhancedStats from "@/components/EnhancedStats";
 import {
   getConceptProgress,
   updateConceptProgress,
@@ -13,6 +17,7 @@ import {
   isConceptLearned,
   getOverallStats,
   clearProgress,
+  addQuestionToHistory,
 } from "@/lib/progress";
 
 const unitLabels = {
@@ -31,7 +36,15 @@ export default function Home() {
   const [error, setError] = useState(null);
   const [showDashboard, setShowDashboard] = useState(false);
   const [showPrereqChain, setShowPrereqChain] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0); // Force re-render after progress update
+  const [showHistory, setShowHistory] = useState(false);
+  const [showStats, setShowStats] = useState(false);
+  const [showReview, setShowReview] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(false);
+  const [currentHistoryId, setCurrentHistoryId] = useState(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Timer for question
+  const questionStartTime = useRef(null);
 
   // Load knowledge graph on mount
   useEffect(() => {
@@ -39,7 +52,6 @@ export default function Home() {
       .then((res) => res.json())
       .then((data) => {
         setConcepts(data);
-        // Select recommended concept by default
         const recommended = getRecommendedConcept(data);
         if (recommended) {
           setSelectedConceptId(recommended.id);
@@ -63,7 +75,6 @@ export default function Home() {
   const mastery = selectedConceptId ? getMasteryLevel(selectedConceptId) : null;
   const stats = concepts.length > 0 ? getOverallStats(concepts) : null;
 
-  // Get list of learned concept names for API
   const getLearnedConceptNames = useCallback(() => {
     return concepts.filter((c) => isConceptLearned(c.id)).map((c) => c.name);
   }, [concepts]);
@@ -83,13 +94,13 @@ export default function Home() {
     setQuestion(null);
     setSelectedAnswer("");
     setIsSubmitted(false);
+    setShowExplanation(false);
+    setCurrentHistoryId(null);
 
     try {
       const response = await fetch("/api/generate-question", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           concept: selectedConcept,
           userPerformance: conceptProgress,
@@ -104,6 +115,7 @@ export default function Home() {
 
       const data = await response.json();
       setQuestion(data);
+      questionStartTime.current = Date.now();
     } catch (err) {
       setError(err.message);
     } finally {
@@ -116,10 +128,28 @@ export default function Home() {
 
     setIsSubmitted(true);
     const isCorrect = selectedAnswer === question.correct;
+    const timeTaken = questionStartTime.current
+      ? Math.round((Date.now() - questionStartTime.current) / 1000)
+      : null;
 
-    // Update progress in localStorage
+    // Update progress
     updateConceptProgress(selectedConceptId, isCorrect);
-    setRefreshKey((prev) => prev + 1); // Force re-render
+
+    // Add to history
+    const historyEntry = addQuestionToHistory({
+      conceptId: selectedConceptId,
+      conceptName: selectedConcept.name,
+      question: question.question,
+      options: question.options,
+      studentAnswer: selectedAnswer,
+      correctAnswer: question.correct,
+      isCorrect,
+      timeTaken,
+      explanation: question.explanation,
+    });
+
+    setCurrentHistoryId(historyEntry.id);
+    setRefreshKey((prev) => prev + 1);
   };
 
   const handleSelectConcept = (conceptId) => {
@@ -129,6 +159,10 @@ export default function Home() {
     setIsSubmitted(false);
     setError(null);
     setShowDashboard(false);
+    setShowHistory(false);
+    setShowStats(false);
+    setShowExplanation(false);
+    setCurrentHistoryId(null);
   };
 
   const handlePracticeWeakest = () => {
@@ -160,6 +194,25 @@ export default function Home() {
     }
   };
 
+  const handleViewExplanationFromHistory = (entry) => {
+    // Find the concept
+    const concept = concepts.find((c) => c.id === entry.conceptId);
+    if (concept) {
+      setSelectedConceptId(entry.conceptId);
+      setQuestion({
+        question: entry.question,
+        options: entry.options,
+        correct: entry.correctAnswer,
+        explanation: entry.explanation,
+      });
+      setSelectedAnswer(entry.studentAnswer);
+      setIsSubmitted(true);
+      setCurrentHistoryId(entry.id);
+      setShowHistory(false);
+      setShowExplanation(true);
+    }
+  };
+
   const getOptionClass = (optionKey) => {
     if (!isSubmitted) {
       return selectedAnswer === optionKey ? "option selected" : "option";
@@ -173,7 +226,6 @@ export default function Home() {
     return "option";
   };
 
-  // Group concepts by unit for dropdown
   const groupedConcepts = concepts.reduce((acc, concept) => {
     if (!acc[concept.unit]) {
       acc[concept.unit] = [];
@@ -182,19 +234,45 @@ export default function Home() {
     return acc;
   }, {});
 
+  const isIncorrect = isSubmitted && selectedAnswer !== question?.correct;
+
   return (
     <div className="container" key={refreshKey}>
       <header className="app-header">
         <h1>IB Economics HL Adaptive Learning</h1>
         <div className="header-actions">
           <button
-            className="btn-secondary"
-            onClick={() => setShowDashboard(!showDashboard)}
+            className={`btn-secondary ${showStats ? "active" : ""}`}
+            onClick={() => {
+              setShowStats(!showStats);
+              setShowDashboard(false);
+              setShowHistory(false);
+            }}
           >
-            {showDashboard ? "Hide Dashboard" : "Progress Dashboard"}
+            Analytics
+          </button>
+          <button
+            className={`btn-secondary ${showHistory ? "active" : ""}`}
+            onClick={() => {
+              setShowHistory(!showHistory);
+              setShowDashboard(false);
+              setShowStats(false);
+            }}
+          >
+            History
+          </button>
+          <button
+            className={`btn-secondary ${showDashboard ? "active" : ""}`}
+            onClick={() => {
+              setShowDashboard(!showDashboard);
+              setShowHistory(false);
+              setShowStats(false);
+            }}
+          >
+            Dashboard
           </button>
           <button className="btn-danger-small" onClick={handleResetProgress}>
-            Reset Progress
+            Reset
           </button>
         </div>
       </header>
@@ -203,19 +281,19 @@ export default function Home() {
         <div className="stats-bar">
           <div className="stat-item">
             <span className="stat-value">{stats.conceptsMastered}</span>
-            <span className="stat-label">Concepts Mastered</span>
+            <span className="stat-label">Mastered</span>
           </div>
           <div className="stat-item">
             <span className="stat-value">{stats.totalConcepts}</span>
-            <span className="stat-label">Total Concepts</span>
+            <span className="stat-label">Total</span>
           </div>
           <div className="stat-item">
             <span className="stat-value">{stats.overallAccuracy}%</span>
-            <span className="stat-label">Overall Accuracy</span>
+            <span className="stat-label">Accuracy</span>
           </div>
           <div className="stat-item">
             <span className="stat-value">{stats.totalAttempts}</span>
-            <span className="stat-label">Questions Answered</span>
+            <span className="stat-label">Questions</span>
           </div>
           <div className="progress-mini">
             <div
@@ -224,6 +302,20 @@ export default function Home() {
             />
           </div>
         </div>
+      )}
+
+      {showStats && (
+        <EnhancedStats
+          concepts={concepts}
+          onSelectConcept={handleSelectConcept}
+        />
+      )}
+
+      {showHistory && (
+        <QuestionHistory
+          onSelectConcept={handleSelectConcept}
+          onViewExplanation={handleViewExplanationFromHistory}
+        />
       )}
 
       {showDashboard && (
@@ -238,7 +330,7 @@ export default function Home() {
         <div className="controls-section">
           <div className="adaptive-buttons">
             <button className="btn-adaptive" onClick={handlePracticeWeakest}>
-              Practice Weakest Concept
+              Practice Weakest
             </button>
             <button
               className="btn-adaptive"
@@ -312,23 +404,25 @@ export default function Home() {
               <div className="concept-stats">
                 <span>
                   Progress: {conceptProgress.correct}/{conceptProgress.attempts}{" "}
-                  correct ({conceptProgress.confidence}%)
+                  ({conceptProgress.confidence}%)
                 </span>
                 {conceptProgress.attempts < 3 && (
                   <span className="attempts-note">
-                    ({3 - conceptProgress.attempts} more attempts needed for
-                    mastery evaluation)
+                    ({3 - conceptProgress.attempts} more for mastery check)
                   </span>
                 )}
               </div>
             )}
 
-            <div className="prereq-toggle">
+            <div className="concept-actions">
               <button
                 className="btn-link"
                 onClick={() => setShowPrereqChain(!showPrereqChain)}
               >
                 {showPrereqChain ? "Hide" : "Show"} Learning Path
+              </button>
+              <button className="btn-link" onClick={() => setShowReview(true)}>
+                Review Concept
               </button>
             </div>
 
@@ -346,7 +440,7 @@ export default function Home() {
                 <div>
                   <strong>Prerequisites Required</strong>
                   <p>
-                    Complete these concepts first:{" "}
+                    Complete these first:{" "}
                     {prereqStatus.missing.map((c, i) => (
                       <button
                         key={c.id}
@@ -377,10 +471,7 @@ export default function Home() {
         {isLoading && (
           <div className="loading">
             <div className="spinner" />
-            <span>
-              Generating {conceptProgress?.attempts >= 3 ? "adaptive" : ""}{" "}
-              IB-style question...
-            </span>
+            <span>Generating adaptive question...</span>
           </div>
         )}
 
@@ -397,7 +488,7 @@ export default function Home() {
               <h2>Question</h2>
               {question.adaptedDifficulty && (
                 <span className="adapted-difficulty">
-                  Adapted Difficulty: {question.adaptedDifficulty}/5
+                  Difficulty: {question.adaptedDifficulty}/5
                 </span>
               )}
             </div>
@@ -436,9 +527,19 @@ export default function Home() {
                   Submit Answer
                 </button>
               ) : (
-                <button onClick={generateQuestion} className="btn-primary">
-                  Next Question
-                </button>
+                <div className="post-submit-actions">
+                  <button onClick={generateQuestion} className="btn-primary">
+                    Next Question
+                  </button>
+                  {isIncorrect && !showExplanation && (
+                    <button
+                      onClick={() => setShowExplanation(true)}
+                      className="btn-explain"
+                    >
+                      Get Detailed Explanation
+                    </button>
+                  )}
+                </div>
               )}
             </div>
 
@@ -455,8 +556,8 @@ export default function Home() {
                     </>
                   ) : (
                     <>
-                      <span className="result-icon">✗</span> Incorrect - The
-                      correct answer is {question.correct}
+                      <span className="result-icon">✗</span> Incorrect - Answer
+                      is {question.correct}
                     </>
                   )}
                 </h3>
@@ -466,7 +567,7 @@ export default function Home() {
                 </div>
                 {conceptProgress && (
                   <div className="updated-progress">
-                    New progress: {conceptProgress.correct}/
+                    Progress: {conceptProgress.correct}/
                     {conceptProgress.attempts} ({conceptProgress.confidence}%)
                     {isConceptLearned(selectedConceptId) && (
                       <span className="mastered-badge">Mastered!</span>
@@ -475,9 +576,28 @@ export default function Home() {
                 )}
               </div>
             )}
+
+            {showExplanation && isIncorrect && (
+              <PersonalizedExplanation
+                concept={selectedConcept}
+                question={question.question}
+                studentAnswer={selectedAnswer}
+                correctAnswer={question.correct}
+                options={question.options}
+                historyId={currentHistoryId}
+                onClose={() => setShowExplanation(false)}
+              />
+            )}
           </div>
         )}
       </div>
+
+      {showReview && selectedConcept && (
+        <ConceptReview
+          concept={selectedConcept}
+          onClose={() => setShowReview(false)}
+        />
+      )}
     </div>
   );
 }
