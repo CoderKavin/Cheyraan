@@ -8,14 +8,14 @@ export async function POST(request) {
     if (!concept) {
       return NextResponse.json(
         { error: "Concept is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!process.env.GEMINI_API_KEY) {
       return NextResponse.json(
         { error: "GEMINI_API_KEY is not configured" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -79,13 +79,43 @@ Return ONLY valid JSON in this exact format:
     }
     cleanedText = cleanedText.trim();
 
-    const review = JSON.parse(cleanedText);
+    let review;
+    try {
+      review = JSON.parse(cleanedText);
+    } catch (parseError) {
+      console.error("JSON parse error:", parseError);
+      console.error("Received text:", cleanedText);
+      return NextResponse.json(
+        { error: "Failed to parse AI response. Please try again." },
+        { status: 500 },
+      );
+    }
+
+    // Validate required fields
+    if (!review.definition || !review.keyPoints) {
+      return NextResponse.json(
+        { error: "Invalid response structure from AI. Please try again." },
+        { status: 500 },
+      );
+    }
+
     return NextResponse.json(review);
   } catch (error) {
     console.error("Error generating review:", error);
+
+    // Handle rate limiting
+    if (error.status === 429) {
+      return NextResponse.json(
+        {
+          error: "API rate limit reached. Please wait a moment and try again.",
+        },
+        { status: 429 },
+      );
+    }
+
     return NextResponse.json(
       { error: error.message || "Failed to generate review" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { updateHistoryWithExplanation } from "@/lib/progress";
 
 export default function PersonalizedExplanation({
@@ -52,11 +52,12 @@ export default function PersonalizedExplanation({
     }
   };
 
-  // Auto-fetch on mount if not already loaded
-  useState(() => {
+  // Auto-fetch on mount
+  useEffect(() => {
     if (!explanation && !isLoading) {
       getExplanation();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -64,7 +65,9 @@ export default function PersonalizedExplanation({
       <div className="explanation-header">
         <h3>Understanding Your Answer</h3>
         {onClose && (
-          <button className="close-btn" onClick={onClose}>×</button>
+          <button className="close-btn" onClick={onClose} aria-label="Close">
+            ×
+          </button>
         )}
       </div>
 
@@ -116,7 +119,9 @@ export default function PersonalizedExplanation({
           <section className="explanation-section insight">
             <div className="key-insight">
               <span className="insight-icon">💡</span>
-              <p><strong>Key Insight:</strong> {explanation.keyInsight}</p>
+              <p>
+                <strong>Key Insight:</strong> {explanation.keyInsight}
+              </p>
             </div>
           </section>
 

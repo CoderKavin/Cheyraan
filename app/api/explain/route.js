@@ -9,14 +9,14 @@ export async function POST(request) {
     if (!concept || !question || !studentAnswer || !correctAnswer) {
       return NextResponse.json(
         { error: "Missing required fields" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!process.env.GEMINI_API_KEY) {
       return NextResponse.json(
         { error: "GEMINI_API_KEY is not configured" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -62,13 +62,47 @@ Return ONLY valid JSON in this exact format:
     }
     cleanedText = cleanedText.trim();
 
-    const explanation = JSON.parse(cleanedText);
+    let explanation;
+    try {
+      explanation = JSON.parse(cleanedText);
+    } catch (parseError) {
+      console.error("JSON parse error:", parseError);
+      console.error("Received text:", cleanedText);
+      return NextResponse.json(
+        { error: "Failed to parse AI response. Please try again." },
+        { status: 500 },
+      );
+    }
+
+    // Validate required fields
+    if (
+      !explanation.likelyReasoning ||
+      !explanation.misconception ||
+      !explanation.correctExplanation
+    ) {
+      return NextResponse.json(
+        { error: "Invalid response structure from AI. Please try again." },
+        { status: 500 },
+      );
+    }
+
     return NextResponse.json(explanation);
   } catch (error) {
     console.error("Error generating explanation:", error);
+
+    // Handle rate limiting
+    if (error.status === 429) {
+      return NextResponse.json(
+        {
+          error: "API rate limit reached. Please wait a moment and try again.",
+        },
+        { status: 429 },
+      );
+    }
+
     return NextResponse.json(
       { error: error.message || "Failed to generate explanation" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
