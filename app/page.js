@@ -20,20 +20,22 @@ import {
 const unitLabels = {
   microeconomics: "Microeconomics",
   macroeconomics: "Macroeconomics",
-  international_economics: "International",
+  international_economics: "International Economics",
 };
 
-const cardColors = ["purple", "green", "yellow", "pink", "mint", "white"];
-const cardIcons = ["📊", "📈", "💹", "🏦", "💰", "📉", "🌍", "🏭", "💵", "📋"];
-
-// Floating card positions for the scattered layout
-const cardPositions = [
-  { top: 0, left: 0 },
-  { top: 180, left: 360 },
-  { top: 60, left: 720 },
-  { top: 360, left: 80 },
-  { top: 420, left: 440 },
-  { top: 540, left: 160 },
+const icons = [
+  "📊",
+  "📈",
+  "💹",
+  "🏦",
+  "💰",
+  "📉",
+  "🌍",
+  "🏭",
+  "💵",
+  "📋",
+  "🎯",
+  "📦",
 ];
 
 export default function Home() {
@@ -44,11 +46,12 @@ export default function Home() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [showPractice, setShowPractice] = useState(false);
+  const [activeTab, setActiveTab] = useState("practice");
   const [showReview, setShowReview] = useState(false);
   const [showExplanation, setShowExplanation] = useState(false);
   const [currentHistoryId, setCurrentHistoryId] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [panelExpanded, setPanelExpanded] = useState(false);
 
   const questionStartTime = useRef(null);
 
@@ -78,6 +81,7 @@ export default function Home() {
     ? arePrerequisitesMet(selectedConcept, concepts)
     : { met: true, missing: [] };
   const stats = concepts.length > 0 ? getOverallStats(concepts) : null;
+  const history = getQuestionHistory();
 
   const getLearnedConceptNames = useCallback(() => {
     return concepts.filter((c) => isConceptLearned(c.id)).map((c) => c.name);
@@ -161,7 +165,7 @@ export default function Home() {
     setError(null);
     setShowExplanation(false);
     setCurrentHistoryId(null);
-    setShowPractice(true);
+    setPanelExpanded(true);
   };
 
   const handlePracticeWeakest = () => {
@@ -175,7 +179,7 @@ export default function Home() {
   };
 
   const getOptionClass = (optionKey) => {
-    let classes = "option-item";
+    let classes = "option";
     if (!isSubmitted) {
       if (selectedAnswer === optionKey) classes += " selected";
     } else {
@@ -185,419 +189,386 @@ export default function Home() {
     return classes;
   };
 
-  const getStatusInfo = (concept) => {
+  const getBadgeInfo = (concept) => {
     const progress = getConceptProgress(concept.id);
     const prereqs = arePrerequisitesMet(concept, concepts);
 
-    if (!prereqs.met) return { class: "locked", label: "Locked 🔒" };
+    if (!prereqs.met) return { class: "locked", label: "Locked" };
     if (progress.confidence >= 70 && progress.attempts >= 3)
-      return { class: "completed", label: "Completed 👏" };
+      return { class: "mastered", label: "Mastered" };
     if (progress.attempts > 0)
-      return {
-        class: "in-progress",
-        label: `Watching ${Math.floor(progress.confidence / 10)}:${String(progress.confidence % 10).padStart(2, "0")}`,
-      };
-    return { class: "upcoming", label: "Upcoming ⏰" };
+      return { class: "learning", label: `${progress.confidence}%` };
+    return { class: "new", label: "New" };
   };
 
-  // Get 6 concepts to display as floating cards
-  const displayConcepts = concepts.slice(0, 6);
+  const getProgressClass = (confidence) => {
+    if (confidence >= 70) return "";
+    if (confidence >= 40) return "medium";
+    return "low";
+  };
+
+  // Group concepts by unit
+  const groupedConcepts = concepts.reduce((acc, concept) => {
+    if (!acc[concept.unit]) acc[concept.unit] = [];
+    acc[concept.unit].push(concept);
+    return acc;
+  }, {});
 
   const isIncorrect = isSubmitted && selectedAnswer !== question?.correct;
 
   return (
-    <div className="app-container" key={refreshKey}>
-      {/* Top Navigation */}
-      <nav className="top-nav">
-        <div className="nav-logo">IB Econ</div>
-
-        <div className="nav-center">
-          <button className="nav-item active">
-            <span className="nav-item-icon">📖</span>
-            Learning Plan
-          </button>
-          <button className="nav-item">
-            <span className="nav-item-icon">👥</span>
-          </button>
-          <button className="nav-item">
-            <span className="nav-item-icon">✓</span>
-          </button>
-          <button className="nav-item">
-            <span className="nav-item-icon">📁</span>
-          </button>
-          <button className="nav-item">
-            <span className="nav-item-icon">⚙️</span>
-          </button>
+    <div className="app" key={refreshKey}>
+      {/* Header */}
+      <header className="header">
+        <div className="logo">
+          IB <span>Economics</span>
         </div>
 
-        <div className="nav-right">
-          <div className="user-profile-nav">
-            <div className="user-info-nav">
-              <div className="user-name-nav">IB Student</div>
-              <div className="user-email-nav">student@ib.edu</div>
+        <nav className="nav">
+          <button
+            className={`nav-btn ${activeTab === "practice" ? "active" : ""}`}
+            onClick={() => setActiveTab("practice")}
+          >
+            Practice
+          </button>
+          <button
+            className={`nav-btn ${activeTab === "history" ? "active" : ""}`}
+            onClick={() => setActiveTab("history")}
+          >
+            History
+          </button>
+          <button
+            className={`nav-btn ${activeTab === "stats" ? "active" : ""}`}
+            onClick={() => setActiveTab("stats")}
+          >
+            Stats
+          </button>
+        </nav>
+
+        <button className="user-btn">S</button>
+      </header>
+
+      {/* Stats Bar */}
+      {stats && (
+        <div className="stats-bar">
+          <div className="stat-card">
+            <div className="stat-label">Mastered</div>
+            <div className="stat-value success">{stats.conceptsMastered}</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-label">In Progress</div>
+            <div className="stat-value">
+              {stats.conceptsAttempted - stats.conceptsMastered}
             </div>
-            <div className="user-avatar">S</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-label">Remaining</div>
+            <div className="stat-value">
+              {stats.totalConcepts - stats.conceptsAttempted}
+            </div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-label">Accuracy</div>
+            <div className="stat-value accent">{stats.overallAccuracy}%</div>
           </div>
         </div>
-      </nav>
+      )}
 
-      {/* Main Layout */}
-      <div className="main-layout">
-        {/* Left Section - Learning Plan */}
-        <div className="learning-section">
-          <div className="page-header">
-            <h1 className="page-title">
-              My Learning Plan <span className="page-title-emoji">📚</span>
-            </h1>
-            <div className="search-box">
-              <span className="search-icon">🔍</span>
-              <input type="text" placeholder="Search" />
+      {/* Main Content */}
+      {activeTab === "practice" && (
+        <div className="main-grid">
+          {/* Concepts List */}
+          <div className="concepts-section">
+            <div className="section-header">
+              <div>
+                <h2 className="section-title">Concepts</h2>
+                <p className="section-subtitle">Select a concept to practice</p>
+              </div>
             </div>
+
+            {Object.entries(groupedConcepts).map(([unit, unitConcepts]) => (
+              <div key={unit} className="unit-group">
+                <div className="unit-label">{unitLabels[unit]}</div>
+                <div className="concept-list">
+                  {unitConcepts.map((concept, idx) => {
+                    const progress = getConceptProgress(concept.id);
+                    const badge = getBadgeInfo(concept);
+                    const prereqs = arePrerequisitesMet(concept, concepts);
+                    const isSelected = selectedConceptId === concept.id;
+                    const globalIdx = concepts.findIndex(
+                      (c) => c.id === concept.id,
+                    );
+
+                    return (
+                      <div
+                        key={concept.id}
+                        className={`concept-item ${isSelected ? "selected" : ""} ${!prereqs.met ? "locked" : ""}`}
+                        onClick={() =>
+                          prereqs.met && handleSelectConcept(concept.id)
+                        }
+                      >
+                        <div className="concept-icon">
+                          {icons[globalIdx % icons.length]}
+                        </div>
+                        <div className="concept-info">
+                          <div className="concept-name">{concept.name}</div>
+                          <div className="concept-desc">
+                            {concept.description}
+                          </div>
+                        </div>
+                        <div className="concept-meta">
+                          <div className="concept-progress">
+                            <div
+                              className={`concept-progress-fill ${getProgressClass(progress.confidence)}`}
+                              style={{ width: `${progress.confidence}%` }}
+                            />
+                          </div>
+                          <span className={`concept-badge ${badge.class}`}>
+                            {badge.label}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Stats Summary */}
-          {stats && (
-            <div className="stats-summary">
-              <span className="stats-summary-icon">🎉</span>
-              <div className="stat-item">
-                <div className="stat-number">{stats.totalConcepts}</div>
-                <div className="stat-label">Total</div>
-              </div>
-              <div className="stat-divider"></div>
-              <div className="stat-item">
-                <div className="stat-number">{stats.conceptsMastered}</div>
-                <div className="stat-label">Completed</div>
-              </div>
-              <div className="stat-divider"></div>
-              <div className="stat-item">
-                <div className="stat-number">
-                  {stats.totalConcepts - stats.conceptsAttempted}
-                </div>
-                <div className="stat-label">Upcoming</div>
-              </div>
+          {/* Practice Panel */}
+          <div className={`practice-panel ${panelExpanded ? "expanded" : ""}`}>
+            <div
+              className="practice-header"
+              onClick={() => setPanelExpanded(!panelExpanded)}
+            >
+              <h2 className="practice-title">Practice</h2>
+              <p className="practice-subtitle">
+                {selectedConcept ? selectedConcept.name : "Select a concept"}
+              </p>
             </div>
-          )}
 
-          {/* Floating Concept Cards */}
-          <div className="cards-container">
-            {displayConcepts.map((concept, index) => {
-              const status = getStatusInfo(concept);
-              const isSelected = selectedConceptId === concept.id;
-              const prereqs = arePrerequisitesMet(concept, concepts);
-              const pos = cardPositions[index] || {
-                top: index * 200,
-                left: (index % 3) * 350,
-              };
+            {/* Quick Actions */}
+            <div className="quick-actions">
+              <button className="quick-btn" onClick={handlePracticeWeakest}>
+                Weakest
+              </button>
+              <button className="quick-btn" onClick={handlePracticeRecommended}>
+                Recommended
+              </button>
+            </div>
 
-              return (
-                <div
-                  key={concept.id}
-                  className={`concept-card ${cardColors[index % cardColors.length]} ${isSelected ? "selected" : ""} ${!prereqs.met ? "locked" : ""}`}
-                  style={{ top: pos.top, left: pos.left }}
-                  onClick={() => prereqs.met && handleSelectConcept(concept.id)}
-                >
-                  <div className="card-header">
-                    <div className="card-icon">
-                      {cardIcons[index % cardIcons.length]}
-                    </div>
-                    {index === 2 && <div className="card-badge">🧠</div>}
-                    {index === 4 && <div className="card-badge">🔒</div>}
-                  </div>
-
-                  <h3 className="card-title">{concept.name}</h3>
-                  <p className="card-description">{concept.description}</p>
-
-                  <div className="card-footer">
-                    <span className={`card-status ${status.class}`}>
-                      {status.label}
-                    </span>
-                    <div className="card-actions">
-                      <button className="card-action-btn secondary">•••</button>
-                      <button className="card-action-btn secondary">✕</button>
-                      <button className="card-action-btn primary">✓</button>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-
-            {/* Media Card Example */}
-            {concepts[6] && (
-              <div
-                className="concept-card purple media-card"
-                style={{ top: 120, left: 0 }}
-                onClick={() => {
-                  const prereqs = arePrerequisitesMet(concepts[6], concepts);
-                  if (prereqs.met) handleSelectConcept(concepts[6].id);
-                }}
-              >
-                <div className="media-preview">
-                  <div className="media-play-btn">▶</div>
-                  <div className="media-decorations">
-                    <span className="media-decoration">🎵</span>
-                    <span className="media-decoration">🎶</span>
-                  </div>
-                </div>
-                <h3 className="card-title">{concepts[6].name}</h3>
-                <p className="card-description">{concepts[6].description}</p>
-                <div className="card-footer">
-                  <div className="watching-badge">
-                    <span className="icon">⏱</span>
-                    Watching 00:30
-                  </div>
-                  <div className="avatar-stack">
-                    <div className="avatar">👩</div>
-                    <div className="avatar">👨</div>
-                    <div className="avatar">👩‍🦱</div>
-                  </div>
+            {/* Selected Concept Info */}
+            {selectedConcept && conceptProgress && !question && !isLoading && (
+              <div className="selected-info">
+                <div className="selected-name">{selectedConcept.name}</div>
+                <div className="selected-stats">
+                  <span>
+                    {conceptProgress.correct}/{conceptProgress.attempts} correct
+                  </span>
+                  <span>{conceptProgress.confidence}% confidence</span>
                 </div>
               </div>
             )}
-          </div>
-        </div>
 
-        {/* Right Section - Events */}
-        <div className="events-section">
-          <div className="events-header">
-            <h2 className="events-title">My Events</h2>
-            <span className="events-emoji">🤯</span>
-          </div>
-
-          <div className="events-list">
-            <div className="event-card">
-              <div className="event-header">
-                <div className="event-type">
-                  <span className="event-type-icon">📹</span>
-                  Webinar
-                </div>
-                <div className="event-date">Tu, 25.03</div>
+            {/* Error */}
+            {error && (
+              <div className="error">
+                <span>⚠️</span>
+                <span>{error}</span>
               </div>
-              <p className="event-description">
-                Understanding economic research, critical appraisal skills, and
-                applying evidence-based guidelines in practice
-              </p>
-              <div className="event-time">
-                <span>⏰</span>
-                Start at 12:30
-              </div>
-            </div>
+            )}
 
-            <div className="event-card">
-              <div className="event-header">
-                <div className="event-type">
-                  <span className="event-type-icon">📊</span>
-                  Lesson
-                </div>
-                <div className="event-date">We, 26.03</div>
-              </div>
-              <p className="event-description">
-                Overview of market structures, price mechanisms, and their
-                impact on resource allocation.
-              </p>
-            </div>
-
-            <div className="event-card pink">
-              <div className="event-header">
-                <div className="event-type">
-                  <span className="event-type-icon">✨</span>
-                  Task
-                </div>
-                <div className="event-date">Th, 27.03</div>
-              </div>
-              <p className="event-description">
-                Examination of major global economic issues, including trade
-                policies, exchange rates, and balance of payments.
-              </p>
-            </div>
-
-            <div className="event-card green">
-              <div className="event-header">
-                <div className="event-type">
-                  <span className="event-type-icon">✨</span>
-                  Task
-                </div>
-                <div className="event-date">Fr, 28.03</div>
-              </div>
-              <p className="event-description">
-                Importance of fiscal and monetary policies for optimal economic
-                outcomes.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Side Mini Navigation */}
-      <div className="side-mini-nav">
-        <button className="mini-nav-btn active">🔑</button>
-        <button className="mini-nav-btn">☰</button>
-        <button className="mini-nav-btn">⊞</button>
-        <button className="mini-nav-btn notification-badge" data-count="29">
-          🔔
-        </button>
-      </div>
-
-      {/* Zoom Controls */}
-      <div className="zoom-controls">
-        <button className="zoom-btn">+</button>
-        <button className="zoom-btn">−</button>
-      </div>
-
-      {/* Floating Toolbar */}
-      <div className="floating-toolbar">
-        <button className="toolbar-btn blue">T</button>
-        <button className="toolbar-btn purple">A</button>
-        <button className="toolbar-btn red">💬</button>
-        <button className="toolbar-btn green">📋</button>
-        <button className="toolbar-btn yellow">🎧</button>
-        <button className="toolbar-btn gray">😊</button>
-        <button className="toolbar-btn gray">+</button>
-      </div>
-
-      {/* Practice Panel */}
-      <div className={`practice-panel ${showPractice ? "active" : ""}`}>
-        <div className="practice-header">
-          <h2 className="practice-title">
-            {selectedConcept ? selectedConcept.name : "Practice"}
-          </h2>
-          <button
-            className="practice-close"
-            onClick={() => setShowPractice(false)}
-          >
-            ✕
-          </button>
-        </div>
-
-        {/* Quick Actions */}
-        <div className="quick-actions">
-          <button className="quick-action-btn" onClick={handlePracticeWeakest}>
-            🎯 Weakest
-          </button>
-          <button
-            className="quick-action-btn"
-            onClick={handlePracticeRecommended}
-          >
-            ⭐ Recommended
-          </button>
-          <button
-            className="quick-action-btn"
-            onClick={() => setShowReview(true)}
-          >
-            📖 Review
-          </button>
-        </div>
-
-        {/* Error */}
-        {error && (
-          <div className="error-state">
-            <span className="error-icon">⚠️</span>
-            <span className="error-message">{error}</span>
-          </div>
-        )}
-
-        {/* Generate Button */}
-        {!question && !isLoading && (
-          <button
-            className="btn btn-primary btn-full"
-            onClick={generateQuestion}
-            disabled={!selectedConcept || !prereqStatus.met}
-          >
-            Generate Question
-          </button>
-        )}
-
-        {/* Loading */}
-        {isLoading && (
-          <div className="loading-state">
-            <div className="spinner"></div>
-            <span className="loading-text">Generating question...</span>
-          </div>
-        )}
-
-        {/* Question */}
-        {question && (
-          <>
-            <div className="question-box">
-              <div className="question-text">{question.question}</div>
-            </div>
-
-            <div className="options-list">
-              {Object.entries(question.options).map(([key, value]) => (
-                <div
-                  key={key}
-                  className={getOptionClass(key)}
-                  onClick={() => !isSubmitted && setSelectedAnswer(key)}
+            {/* Generate Button */}
+            {!question && !isLoading && (
+              <>
+                <button
+                  className="btn btn-primary btn-full"
+                  onClick={generateQuestion}
+                  disabled={!selectedConcept || !prereqStatus.met}
                 >
-                  <div className="option-letter">{key}</div>
-                  <div className="option-text">{value}</div>
+                  Generate Question
+                </button>
+                {selectedConcept && (
+                  <button
+                    className="btn btn-secondary btn-full"
+                    onClick={() => setShowReview(true)}
+                    style={{ marginTop: 8 }}
+                  >
+                    Review Concept
+                  </button>
+                )}
+              </>
+            )}
+
+            {/* Loading */}
+            {isLoading && (
+              <div className="loading">
+                <div className="spinner"></div>
+                <span className="loading-text">Generating question...</span>
+              </div>
+            )}
+
+            {/* Question */}
+            {question && (
+              <>
+                <div className="question-box">
+                  <div className="question-text">{question.question}</div>
+                </div>
+
+                <div className="options">
+                  {Object.entries(question.options).map(([key, value]) => (
+                    <div
+                      key={key}
+                      className={getOptionClass(key)}
+                      onClick={() => !isSubmitted && setSelectedAnswer(key)}
+                    >
+                      <div className="option-key">{key}</div>
+                      <div className="option-text">{value}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Buttons */}
+                <div style={{ display: "flex", gap: 8 }}>
+                  {!isSubmitted ? (
+                    <button
+                      className="btn btn-primary btn-full"
+                      onClick={handleSubmit}
+                      disabled={!selectedAnswer}
+                    >
+                      Submit
+                    </button>
+                  ) : (
+                    <>
+                      <button
+                        className="btn btn-primary"
+                        onClick={generateQuestion}
+                      >
+                        Next
+                      </button>
+                      {isIncorrect && !showExplanation && (
+                        <button
+                          className="btn btn-warning"
+                          onClick={() => setShowExplanation(true)}
+                        >
+                          Get Help
+                        </button>
+                      )}
+                    </>
+                  )}
+                </div>
+
+                {/* Result */}
+                {isSubmitted && (
+                  <div
+                    className={`result ${selectedAnswer === question.correct ? "correct" : "incorrect"}`}
+                  >
+                    <div className="result-header">
+                      <span className="result-icon">
+                        {selectedAnswer === question.correct ? "✓" : "✗"}
+                      </span>
+                      <span className="result-title">
+                        {selectedAnswer === question.correct
+                          ? "Correct!"
+                          : `Answer: ${question.correct}`}
+                      </span>
+                    </div>
+                    <div className="result-text">{question.explanation}</div>
+                  </div>
+                )}
+
+                {/* Personalized Explanation */}
+                {showExplanation && isIncorrect && (
+                  <PersonalizedExplanation
+                    concept={selectedConcept}
+                    question={question.question}
+                    studentAnswer={selectedAnswer}
+                    correctAnswer={question.correct}
+                    options={question.options}
+                    historyId={currentHistoryId}
+                    onClose={() => setShowExplanation(false)}
+                  />
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* History Tab */}
+      {activeTab === "history" && (
+        <div style={{ maxWidth: 600 }}>
+          <h2 className="section-title" style={{ marginBottom: 16 }}>
+            Question History
+          </h2>
+          {history.length === 0 ? (
+            <div className="empty">
+              <div className="empty-icon">📝</div>
+              <p className="empty-text">No questions attempted yet</p>
+            </div>
+          ) : (
+            <div className="history-list">
+              {history.map((entry) => (
+                <div
+                  key={entry.id}
+                  className={`history-item ${entry.isCorrect ? "correct" : "incorrect"}`}
+                >
+                  <div className="history-icon">
+                    {entry.isCorrect ? "✓" : "✗"}
+                  </div>
+                  <div className="history-info">
+                    <div className="history-concept">{entry.conceptName}</div>
+                    <div className="history-date">
+                      {new Date(entry.timestamp).toLocaleDateString()}
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
+          )}
+        </div>
+      )}
 
-            {/* Submit / Next */}
-            <div style={{ display: "flex", gap: 8 }}>
-              {!isSubmitted ? (
-                <button
-                  className="btn btn-primary btn-full"
-                  onClick={handleSubmit}
-                  disabled={!selectedAnswer}
-                >
-                  Submit Answer
-                </button>
-              ) : (
-                <>
-                  <button
-                    className="btn btn-primary"
-                    onClick={generateQuestion}
-                  >
-                    Next Question
-                  </button>
-                  {isIncorrect && !showExplanation && (
-                    <button
-                      className="btn btn-warning"
-                      onClick={() => setShowExplanation(true)}
-                    >
-                      Get Help
-                    </button>
-                  )}
-                </>
-              )}
+      {/* Stats Tab */}
+      {activeTab === "stats" && stats && (
+        <div style={{ maxWidth: 600 }}>
+          <h2 className="section-title" style={{ marginBottom: 16 }}>
+            Statistics
+          </h2>
+          <div className="stats-bar" style={{ gridTemplateColumns: "1fr 1fr" }}>
+            <div className="stat-card">
+              <div className="stat-label">Total Questions</div>
+              <div className="stat-value">{stats.totalAttempts}</div>
             </div>
-
-            {/* Result */}
-            {isSubmitted && (
-              <div
-                className={`result-card ${selectedAnswer === question.correct ? "correct" : "incorrect"}`}
-              >
-                <div className="result-header">
-                  <span className="result-icon">
-                    {selectedAnswer === question.correct ? "✅" : "❌"}
-                  </span>
-                  <span className="result-title">
-                    {selectedAnswer === question.correct
-                      ? "Correct!"
-                      : `Incorrect — Answer: ${question.correct}`}
-                  </span>
-                </div>
-                <div className="result-explanation">{question.explanation}</div>
-              </div>
-            )}
-
-            {/* Personalized Explanation */}
-            {showExplanation && isIncorrect && (
-              <PersonalizedExplanation
-                concept={selectedConcept}
-                question={question.question}
-                studentAnswer={selectedAnswer}
-                correctAnswer={question.correct}
-                options={question.options}
-                historyId={currentHistoryId}
-                onClose={() => setShowExplanation(false)}
-              />
-            )}
-          </>
-        )}
-      </div>
+            <div className="stat-card">
+              <div className="stat-label">Correct Answers</div>
+              <div className="stat-value success">{stats.totalCorrect}</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-label">Concepts Mastered</div>
+              <div className="stat-value accent">{stats.conceptsMastered}</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-label">Completion</div>
+              <div className="stat-value">{stats.progressPercent}%</div>
+            </div>
+          </div>
+          <button
+            className="btn btn-secondary"
+            onClick={() => {
+              if (
+                window.confirm("Reset all progress? This cannot be undone.")
+              ) {
+                clearProgress();
+                setRefreshKey((prev) => prev + 1);
+              }
+            }}
+            style={{ marginTop: 24 }}
+          >
+            Reset Progress
+          </button>
+        </div>
+      )}
 
       {/* Concept Review Modal */}
       {showReview && selectedConcept && (
