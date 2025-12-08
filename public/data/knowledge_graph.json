@@ -1,0 +1,1232 @@
+[
+  {
+    "id": "scarcity_choice",
+    "name": "Scarcity and Choice",
+    "unit": "microeconomics",
+    "description": "Scarcity is the fundamental economic problem arising from unlimited human wants and limited resources. This forces individuals, firms, and governments to make choices about how to allocate resources, leading to opportunity costs.",
+    "prerequisites": [],
+    "difficulty": 1,
+    "common_misconceptions": [
+      "Confusing scarcity with shortage - scarcity is permanent while shortages are temporary",
+      "Thinking only poor countries face scarcity - all economies face resource constraints",
+      "Believing money solves scarcity - money is just a medium for allocating scarce resources"
+    ],
+    "ib_command_terms": ["define", "explain", "discuss"],
+    "key_diagrams": ["production_possibility_curve"]
+  },
+  {
+    "id": "opportunity_cost",
+    "name": "Opportunity Cost",
+    "unit": "microeconomics",
+    "description": "The value of the next best alternative foregone when making a choice. Opportunity cost is central to economic decision-making and explains why rational agents weigh trade-offs.",
+    "prerequisites": ["scarcity_choice"],
+    "difficulty": 1,
+    "common_misconceptions": [
+      "Including all alternatives rather than just the next best one",
+      "Confusing opportunity cost with monetary cost",
+      "Forgetting that opportunity cost applies to time as well as money"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate"],
+    "key_diagrams": ["production_possibility_curve"]
+  },
+  {
+    "id": "production_possibility_curve",
+    "name": "Production Possibility Curve (PPC)",
+    "unit": "microeconomics",
+    "description": "A model showing the maximum combinations of two goods an economy can produce given its resources and technology. Points on the curve are productively efficient, while points inside represent unemployment or inefficiency.",
+    "prerequisites": ["scarcity_choice", "opportunity_cost"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Thinking the PPC only shifts outward with more labor - technology and capital also matter",
+      "Assuming all points on the PPC are equally desirable - allocative efficiency differs",
+      "Forgetting that the bowed-out shape reflects increasing opportunity costs"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["production_possibility_curve"]
+  },
+  {
+    "id": "demand",
+    "name": "Demand",
+    "unit": "microeconomics",
+    "description": "The quantity of a good or service that consumers are willing and able to purchase at various prices over a given time period. The law of demand states an inverse relationship between price and quantity demanded, ceteris paribus.",
+    "prerequisites": ["scarcity_choice"],
+    "difficulty": 1,
+    "common_misconceptions": [
+      "Confusing a movement along the curve with a shift of the curve",
+      "Forgetting 'willing AND able' - desire alone is not demand",
+      "Ignoring the ceteris paribus assumption when analyzing price changes"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze"],
+    "key_diagrams": ["demand_curve", "supply_demand_curves"]
+  },
+  {
+    "id": "supply",
+    "name": "Supply",
+    "unit": "microeconomics",
+    "description": "The quantity of a good or service that producers are willing and able to sell at various prices over a given time period. The law of supply states a positive relationship between price and quantity supplied, ceteris paribus.",
+    "prerequisites": ["scarcity_choice"],
+    "difficulty": 1,
+    "common_misconceptions": [
+      "Confusing supply with stock or inventory",
+      "Mixing up movements along versus shifts of the supply curve",
+      "Forgetting that supply reflects marginal cost considerations"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze"],
+    "key_diagrams": ["supply_curve", "supply_demand_curves"]
+  },
+  {
+    "id": "market_equilibrium",
+    "name": "Market Equilibrium",
+    "unit": "microeconomics",
+    "description": "The price and quantity at which supply equals demand, with no tendency to change. At equilibrium, there are no shortages or surpluses, and both consumers and producers are satisfied at the margin.",
+    "prerequisites": ["demand", "supply"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Assuming equilibrium means the market is fair or optimal",
+      "Forgetting that equilibrium can shift when determinants change",
+      "Thinking markets always reach equilibrium instantly"
+    ],
+    "ib_command_terms": ["explain", "analyze", "calculate"],
+    "key_diagrams": ["supply_demand_curves"]
+  },
+  {
+    "id": "consumer_surplus",
+    "name": "Consumer Surplus",
+    "unit": "microeconomics",
+    "description": "The difference between what consumers are willing to pay and what they actually pay. Graphically represented as the area below the demand curve and above the market price, it measures consumer welfare from market transactions.",
+    "prerequisites": ["demand", "market_equilibrium"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Confusing consumer surplus with profit or savings",
+      "Forgetting that consumer surplus changes when price changes",
+      "Not recognizing that elastic demand means more sensitive consumer surplus"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate", "analyze"],
+    "key_diagrams": ["consumer_producer_surplus"]
+  },
+  {
+    "id": "producer_surplus",
+    "name": "Producer Surplus",
+    "unit": "microeconomics",
+    "description": "The difference between the price producers receive and the minimum price they would accept (marginal cost). Represented as the area above the supply curve and below the market price, measuring producer welfare.",
+    "prerequisites": ["supply", "market_equilibrium"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Equating producer surplus with profit - it doesn't account for fixed costs",
+      "Forgetting that producer surplus accrues to all factors of production",
+      "Not recognizing the relationship between supply elasticity and producer surplus"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate", "analyze"],
+    "key_diagrams": ["consumer_producer_surplus"]
+  },
+  {
+    "id": "allocative_efficiency",
+    "name": "Allocative Efficiency",
+    "unit": "microeconomics",
+    "description": "Achieved when resources are allocated to produce the combination of goods most valued by society, where price equals marginal cost (P=MC). At this point, total surplus (consumer plus producer surplus) is maximized.",
+    "prerequisites": ["consumer_surplus", "producer_surplus", "market_equilibrium"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Confusing allocative with productive efficiency",
+      "Assuming competitive markets always achieve allocative efficiency - externalities prevent this",
+      "Forgetting that allocative efficiency is about society's preferences, not just quantities"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["supply_demand_curves", "consumer_producer_surplus"]
+  },
+  {
+    "id": "price_elasticity_of_demand",
+    "name": "Price Elasticity of Demand (PED)",
+    "unit": "microeconomics",
+    "description": "Measures the responsiveness of quantity demanded to a change in price, calculated as percentage change in quantity demanded divided by percentage change in price. PED determines revenue implications of price changes.",
+    "prerequisites": ["demand"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Confusing elastic with steep curves - elastic demand has a flatter curve",
+      "Forgetting that PED varies along a linear demand curve",
+      "Ignoring the negative sign or its absolute value interpretation"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate", "analyze"],
+    "key_diagrams": ["ped_curves", "total_revenue_ped"]
+  },
+  {
+    "id": "price_elasticity_of_supply",
+    "name": "Price Elasticity of Supply (PES)",
+    "unit": "microeconomics",
+    "description": "Measures the responsiveness of quantity supplied to a change in price, calculated as percentage change in quantity supplied divided by percentage change in price. PES depends on spare capacity, time period, and factor mobility.",
+    "prerequisites": ["supply"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Assuming PES is always positive - it can be zero in fixed supply cases",
+      "Forgetting that PES increases over time as producers adjust",
+      "Not connecting PES to production capacity and storage ability"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate", "analyze"],
+    "key_diagrams": ["pes_curves"]
+  },
+  {
+    "id": "income_elasticity_of_demand",
+    "name": "Income Elasticity of Demand (YED)",
+    "unit": "microeconomics",
+    "description": "Measures the responsiveness of demand to changes in consumer income, calculated as percentage change in quantity demanded divided by percentage change in income. The sign indicates normal (positive) versus inferior (negative) goods.",
+    "prerequisites": ["demand"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Forgetting that negative YED indicates an inferior good",
+      "Not distinguishing between necessities (0<YED<1) and luxuries (YED>1)",
+      "Assuming YED is constant - it changes at different income levels"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate", "analyze"],
+    "key_diagrams": ["engel_curves"]
+  },
+  {
+    "id": "cross_price_elasticity_of_demand",
+    "name": "Cross-Price Elasticity of Demand (XED)",
+    "unit": "microeconomics",
+    "description": "Measures how the quantity demanded of one good responds to price changes of another good. Positive XED indicates substitute goods while negative XED indicates complementary goods; magnitude shows relationship strength.",
+    "prerequisites": ["demand", "price_elasticity_of_demand"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Confusing the direction of the relationship - positive means substitutes",
+      "Forgetting to identify which good's price changes and which good's quantity changes",
+      "Assuming XED is symmetric between two goods"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate", "analyze"],
+    "key_diagrams": ["xed_diagrams"]
+  },
+  {
+    "id": "price_controls",
+    "name": "Price Controls",
+    "unit": "microeconomics",
+    "description": "Government-imposed limits on prices: price ceilings (maximum prices) set below equilibrium create shortages, while price floors (minimum prices) set above equilibrium create surpluses. Both create welfare losses.",
+    "prerequisites": ["market_equilibrium", "consumer_surplus", "producer_surplus"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Setting a ceiling above equilibrium or floor below - these would have no effect",
+      "Forgetting the secondary effects like black markets or quality reduction",
+      "Not analyzing the welfare loss (deadweight loss) created"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["price_ceiling_diagram", "price_floor_diagram"]
+  },
+  {
+    "id": "indirect_taxes",
+    "name": "Indirect Taxes",
+    "unit": "microeconomics",
+    "description": "Taxes imposed on goods and services (specific or ad valorem) that shift the supply curve leftward/upward. The tax incidence (burden) is shared between consumers and producers depending on relative elasticities.",
+    "prerequisites": ["market_equilibrium", "price_elasticity_of_demand", "price_elasticity_of_supply"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Assuming producers pay the full tax - incidence depends on elasticities",
+      "Confusing specific (per unit) and ad valorem (percentage) tax effects on diagrams",
+      "Forgetting that taxes create deadweight loss even when raising revenue"
+    ],
+    "ib_command_terms": ["explain", "analyze", "calculate", "evaluate"],
+    "key_diagrams": ["indirect_tax_diagram", "tax_incidence"]
+  },
+  {
+    "id": "subsidies",
+    "name": "Subsidies",
+    "unit": "microeconomics",
+    "description": "Government payments to producers that reduce production costs and shift supply rightward/downward. Subsidies lower consumer prices and increase producer revenue, with benefits shared based on elasticities.",
+    "prerequisites": ["market_equilibrium", "price_elasticity_of_demand", "price_elasticity_of_supply"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Assuming only producers benefit - consumers gain through lower prices",
+      "Forgetting that subsidies can create inefficiency and deadweight loss",
+      "Not considering who actually receives the subsidy benefit based on elasticities"
+    ],
+    "ib_command_terms": ["explain", "analyze", "calculate", "evaluate"],
+    "key_diagrams": ["subsidy_diagram"]
+  },
+  {
+    "id": "market_failure",
+    "name": "Market Failure",
+    "unit": "microeconomics",
+    "description": "Occurs when free markets fail to allocate resources efficiently, resulting in allocative inefficiency. Causes include externalities, public goods, asymmetric information, market power, and common pool resources.",
+    "prerequisites": ["allocative_efficiency", "market_equilibrium"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Thinking market failure means markets don't work at all - it means inefficient outcomes",
+      "Assuming government intervention always corrects market failure",
+      "Confusing market failure with business failure or market decline"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["market_failure_diagrams"]
+  },
+  {
+    "id": "negative_externalities",
+    "name": "Negative Externalities",
+    "unit": "microeconomics",
+    "description": "Costs imposed on third parties not involved in a transaction, causing the market to overproduce relative to the social optimum. The marginal social cost exceeds marginal private cost, creating welfare loss.",
+    "prerequisites": ["market_failure", "consumer_surplus", "producer_surplus"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Confusing external costs with internal production costs",
+      "Forgetting to distinguish between production and consumption externalities",
+      "Not recognizing that the vertical distance between MSC and MPC represents the externality"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["negative_externality_production", "negative_externality_consumption"]
+  },
+  {
+    "id": "positive_externalities",
+    "name": "Positive Externalities",
+    "unit": "microeconomics",
+    "description": "Benefits received by third parties not involved in a transaction, causing the market to underproduce relative to the social optimum. The marginal social benefit exceeds marginal private benefit.",
+    "prerequisites": ["market_failure", "consumer_surplus", "producer_surplus"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Assuming all beneficial goods have positive externalities",
+      "Confusing the direction of welfare loss - underproduction not overproduction",
+      "Not distinguishing between production and consumption externalities"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["positive_externality_production", "positive_externality_consumption"]
+  },
+  {
+    "id": "government_responses_externalities",
+    "name": "Government Responses to Externalities",
+    "unit": "microeconomics",
+    "description": "Policies to correct externality-caused market failures include taxes (Pigouvian), subsidies, regulation, cap-and-trade schemes, and property rights assignment. Each approach has different effectiveness and limitations.",
+    "prerequisites": ["negative_externalities", "positive_externalities", "indirect_taxes", "subsidies"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Assuming carbon taxes perfectly internalize externalities - information problems exist",
+      "Forgetting that regulations can be less efficient than market-based solutions",
+      "Not considering enforcement costs and political feasibility"
+    ],
+    "ib_command_terms": ["analyze", "evaluate", "discuss"],
+    "key_diagrams": ["externality_correction_diagrams", "cap_and_trade"]
+  },
+  {
+    "id": "public_goods",
+    "name": "Public Goods",
+    "unit": "microeconomics",
+    "description": "Goods that are non-excludable (cannot prevent non-payers from consuming) and non-rivalrous (one person's consumption doesn't reduce availability to others). Markets underprovide or don't provide public goods due to the free-rider problem.",
+    "prerequisites": ["market_failure"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Confusing public goods with goods provided by the government",
+      "Thinking all government services are public goods - many are excludable",
+      "Forgetting quasi-public goods that are partially excludable or rivalrous"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze", "discuss"],
+    "key_diagrams": ["public_goods_diagram"]
+  },
+  {
+    "id": "common_pool_resources",
+    "name": "Common Pool Resources",
+    "unit": "microeconomics",
+    "description": "Resources that are non-excludable but rivalrous, like fisheries and forests. Without proper management, they face overexploitation (tragedy of the commons) as individuals ignore the social cost of depleting shared resources.",
+    "prerequisites": ["market_failure", "negative_externalities"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Confusing common pool resources with public goods - CPRs are rivalrous",
+      "Assuming privatization always solves the problem - it may not be feasible",
+      "Ignoring successful community-based management solutions"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["tragedy_of_commons_diagram"]
+  },
+  {
+    "id": "asymmetric_information",
+    "name": "Asymmetric Information",
+    "unit": "microeconomics",
+    "description": "When one party in a transaction has more or better information than the other, leading to market failure. This creates adverse selection (hidden information) and moral hazard (hidden actions) problems.",
+    "prerequisites": ["market_failure"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Confusing adverse selection with moral hazard - timing of information problem differs",
+      "Assuming more information always improves markets - too much can overwhelm",
+      "Forgetting signaling and screening as market-based solutions"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["lemons_problem_diagram"]
+  },
+  {
+    "id": "perfect_competition",
+    "name": "Perfect Competition",
+    "unit": "microeconomics",
+    "description": "A market structure with many buyers and sellers, homogeneous products, perfect information, free entry and exit, and price-taking behavior. Firms are allocatively and productively efficient in long-run equilibrium where P=MC=minimum ATC.",
+    "prerequisites": ["market_equilibrium", "allocative_efficiency"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Thinking firms make zero economic profit means they're failing - normal profit is included in costs",
+      "Confusing short-run and long-run equilibrium positions",
+      "Assuming perfect competition commonly exists - it's a theoretical benchmark"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["perfect_competition_firm", "perfect_competition_market"]
+  },
+  {
+    "id": "monopoly",
+    "name": "Monopoly",
+    "unit": "microeconomics",
+    "description": "A market with a single seller protected by high barriers to entry, selling a unique product with no close substitutes. Monopolists are price makers who profit maximize where MR=MC, producing less and charging more than competitive markets.",
+    "prerequisites": ["perfect_competition", "consumer_surplus", "producer_surplus"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Assuming monopolies always make supernormal profits - they can make losses",
+      "Thinking monopolists can charge any price - they're constrained by demand",
+      "Forgetting that monopoly power can come from sources other than being sole seller"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["monopoly_diagram", "monopoly_deadweight_loss"]
+  },
+  {
+    "id": "monopolistic_competition",
+    "name": "Monopolistic Competition",
+    "unit": "microeconomics",
+    "description": "A market structure with many firms selling differentiated products with low barriers to entry. Firms have some market power from differentiation but earn only normal profits in long-run equilibrium due to entry of competitors.",
+    "prerequisites": ["perfect_competition", "monopoly"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Confusing with monopoly - there are many firms, not one",
+      "Forgetting long-run adjustment through entry/exit eliminates supernormal profits",
+      "Not recognizing the excess capacity (producing below minimum ATC) in equilibrium"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["monopolistic_competition_short_run", "monopolistic_competition_long_run"]
+  },
+  {
+    "id": "oligopoly",
+    "name": "Oligopoly",
+    "unit": "microeconomics",
+    "description": "A market dominated by a few large firms with high barriers to entry, selling similar or differentiated products. Strategic interdependence means each firm's decisions affect and depend on rivals' responses, creating incentives for collusion.",
+    "prerequisites": ["monopoly", "market_failure"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Assuming all oligopolies collude - competition can still occur",
+      "Forgetting the kinked demand curve model's limitations",
+      "Not recognizing non-price competition as a key feature"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["kinked_demand_curve", "oligopoly_concentration_ratio"]
+  },
+  {
+    "id": "game_theory",
+    "name": "Game Theory",
+    "unit": "microeconomics",
+    "description": "The study of strategic decision-making when outcomes depend on the choices of multiple players. The prisoner's dilemma illustrates why oligopolistic firms might compete rather than collude, even when collusion benefits all.",
+    "prerequisites": ["oligopoly"],
+    "difficulty": 5,
+    "common_misconceptions": [
+      "Assuming the Nash equilibrium is always the best outcome for players",
+      "Forgetting that repeated games can lead to different outcomes than one-shot games",
+      "Not recognizing dominant strategies versus best response strategies"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["prisoners_dilemma_payoff_matrix", "game_theory_matrix"]
+  },
+  {
+    "id": "price_discrimination",
+    "name": "Price Discrimination",
+    "unit": "microeconomics",
+    "description": "When a firm charges different prices to different consumers for the same product, not based on cost differences. Requires market power, ability to segment markets, and prevention of resale. Can increase efficiency by serving more consumers.",
+    "prerequisites": ["monopoly", "consumer_surplus"],
+    "difficulty": 5,
+    "common_misconceptions": [
+      "All price differences are discrimination - cost-based differences are not",
+      "Assuming price discrimination always harms consumers - some gain access at lower prices",
+      "Confusing first, second, and third-degree price discrimination"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["price_discrimination_diagram"]
+  },
+  {
+    "id": "abuse_of_market_power",
+    "name": "Abuse of Market Power",
+    "unit": "microeconomics",
+    "description": "When firms with market dominance engage in anti-competitive practices such as predatory pricing, exclusive dealing, or collusion. This reduces efficiency, harms consumers, and justifies government intervention through competition policy.",
+    "prerequisites": ["monopoly", "oligopoly", "market_failure"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Assuming all large firms abuse power - size alone isn't problematic",
+      "Confusing competitive pricing with predatory pricing",
+      "Forgetting that some monopoly power can drive innovation"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["monopoly_deadweight_loss"]
+  },
+  {
+    "id": "circular_flow_of_income",
+    "name": "Circular Flow of Income",
+    "unit": "macroeconomics",
+    "description": "A model showing the flow of money, goods, and services between households and firms through product and factor markets. Includes injections (investment, government spending, exports) and leakages (savings, taxes, imports).",
+    "prerequisites": [],
+    "difficulty": 1,
+    "common_misconceptions": [
+      "Forgetting that injections must equal leakages for equilibrium",
+      "Confusing money flow with real flow of goods and services",
+      "Not recognizing the government and foreign sector as separate entities"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze"],
+    "key_diagrams": ["circular_flow_diagram"]
+  },
+  {
+    "id": "gdp_measurement",
+    "name": "GDP Measurement",
+    "unit": "macroeconomics",
+    "description": "Gross Domestic Product measures the total market value of final goods and services produced within a country in a year. Can be calculated via expenditure (C+I+G+X-M), income, or output methods, with adjustments for inflation giving real GDP.",
+    "prerequisites": ["circular_flow_of_income"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Including intermediate goods - only final goods count to avoid double counting",
+      "Confusing GDP with GNI/GNP - geographic versus national ownership basis",
+      "Forgetting to distinguish between nominal and real GDP"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate", "analyze"],
+    "key_diagrams": ["gdp_components_chart"]
+  },
+  {
+    "id": "aggregate_demand",
+    "name": "Aggregate Demand",
+    "unit": "macroeconomics",
+    "description": "The total demand for goods and services in an economy at different price levels, comprising consumption, investment, government spending, and net exports (AD = C + I + G + X - M). The AD curve slopes downward due to wealth, interest rate, and international competitiveness effects.",
+    "prerequisites": ["gdp_measurement"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Confusing microeconomic demand with AD - different reasons for downward slope",
+      "Mixing up movements along AD (price changes) with shifts (component changes)",
+      "Forgetting that AD includes all four components, not just consumption"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze"],
+    "key_diagrams": ["AD_curve", "AD_AS_model"]
+  },
+  {
+    "id": "consumption",
+    "name": "Consumption",
+    "unit": "macroeconomics",
+    "description": "Household spending on goods and services, typically the largest component of AD. Determined by disposable income, wealth, interest rates, consumer confidence, and expectations. The marginal propensity to consume (MPC) shows the proportion of additional income spent.",
+    "prerequisites": ["aggregate_demand"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Assuming MPC is constant - it varies across income levels",
+      "Forgetting that consumption includes durable and non-durable goods plus services",
+      "Confusing average propensity to consume with marginal propensity"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate", "analyze"],
+    "key_diagrams": ["consumption_function"]
+  },
+  {
+    "id": "investment",
+    "name": "Investment",
+    "unit": "macroeconomics",
+    "description": "Business spending on capital goods (plant, equipment, inventories) and residential construction. Investment is volatile, driven by interest rates, business confidence, expected returns, and capacity utilization. It's crucial for economic growth.",
+    "prerequisites": ["aggregate_demand"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Confusing financial investment with economic investment in capital goods",
+      "Forgetting that investment includes inventory changes",
+      "Not recognizing the volatility of investment compared to consumption"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze"],
+    "key_diagrams": ["investment_demand_curve"]
+  },
+  {
+    "id": "government_spending",
+    "name": "Government Spending",
+    "unit": "macroeconomics",
+    "description": "Expenditure by government on goods, services, and public investment (not including transfer payments). It's a policy tool that directly impacts AD and can be used counter-cyclically to stabilize the economy.",
+    "prerequisites": ["aggregate_demand"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Including transfer payments as government spending in AD - they're redistributions",
+      "Assuming all government spending is equally effective at stimulating demand",
+      "Forgetting crowding out effects of increased government spending"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze"],
+    "key_diagrams": ["AD_shift_diagram"]
+  },
+  {
+    "id": "net_exports",
+    "name": "Net Exports",
+    "unit": "macroeconomics",
+    "description": "The difference between exports and imports (X - M), representing the contribution of international trade to aggregate demand. Determined by exchange rates, relative incomes, trade policies, and competitiveness.",
+    "prerequisites": ["aggregate_demand"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Assuming net exports are always positive - trade deficits mean negative net exports",
+      "Forgetting that strong domestic growth increases imports, reducing net exports",
+      "Not recognizing exchange rate effects on export and import values"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze"],
+    "key_diagrams": ["AD_shift_diagram"]
+  },
+  {
+    "id": "short_run_aggregate_supply",
+    "name": "Short Run Aggregate Supply (SRAS)",
+    "unit": "macroeconomics",
+    "description": "The total output firms are willing to produce at different price levels when resource prices are fixed. SRAS slopes upward because higher prices increase profit margins, encouraging production. Shifts with changes in input costs or supply shocks.",
+    "prerequisites": ["aggregate_demand"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Confusing SRAS with microeconomic supply curves - different underlying logic",
+      "Forgetting that 'short run' refers to sticky wages and prices, not calendar time",
+      "Not distinguishing between movements along and shifts of SRAS"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze"],
+    "key_diagrams": ["SRAS_curve", "AD_AS_model"]
+  },
+  {
+    "id": "long_run_aggregate_supply",
+    "name": "Long Run Aggregate Supply (LRAS)",
+    "unit": "macroeconomics",
+    "description": "The total productive capacity of the economy when all prices have fully adjusted, shown as vertical at potential output. Determined by quantity and quality of factors of production and technology, representing full employment output.",
+    "prerequisites": ["short_run_aggregate_supply"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Thinking LRAS can shift leftward from demand changes - only supply factors matter",
+      "Confusing potential output with maximum possible output",
+      "Forgetting the Keynesian view that LRAS may be horizontal at low output levels"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze"],
+    "key_diagrams": ["LRAS_curve", "AD_AS_model"]
+  },
+  {
+    "id": "macroeconomic_equilibrium",
+    "name": "Macroeconomic Equilibrium",
+    "unit": "macroeconomics",
+    "description": "Where AD intersects AS, determining the price level and real output. Short-run equilibrium may differ from potential output, creating output gaps. Long-run equilibrium occurs at potential output after price adjustments.",
+    "prerequisites": ["aggregate_demand", "short_run_aggregate_supply", "long_run_aggregate_supply"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Assuming equilibrium always means full employment - recessionary gaps are possible",
+      "Confusing short-run and long-run equilibrium adjustment processes",
+      "Not recognizing that equilibrium can occur with inflation or deflation"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["AD_AS_model", "output_gaps"]
+  },
+  {
+    "id": "inflationary_gap",
+    "name": "Inflationary Gap",
+    "unit": "macroeconomics",
+    "description": "When actual output exceeds potential output, creating upward pressure on prices. Resources are overutilized, unemployment is below natural rate, and inflation accelerates. Self-corrects through rising wages shifting SRAS left.",
+    "prerequisites": ["macroeconomic_equilibrium"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Thinking an inflationary gap is always bad - it reflects strong demand",
+      "Forgetting the self-correcting mechanism through wage adjustments",
+      "Confusing inflationary gap with inflation itself"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["AD_AS_model", "inflationary_gap_diagram"]
+  },
+  {
+    "id": "deflationary_recessionary_gap",
+    "name": "Deflationary (Recessionary) Gap",
+    "unit": "macroeconomics",
+    "description": "When actual output is below potential output, creating downward pressure on prices. Resources are underutilized with cyclical unemployment above the natural rate. Self-correction is slower due to wage stickiness.",
+    "prerequisites": ["macroeconomic_equilibrium"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Assuming self-correction works quickly - wage rigidity slows adjustment",
+      "Confusing deflation with a deflationary gap - gap is about output, not just prices",
+      "Forgetting Keynesian argument that economy may not self-correct"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["AD_AS_model", "recessionary_gap_diagram"]
+  },
+  {
+    "id": "economic_growth",
+    "name": "Economic Growth",
+    "unit": "macroeconomics",
+    "description": "An increase in real GDP over time, with short-run growth from increased AD or SRAS, and long-run growth from increased productive capacity (LRAS shift). Sustained growth improves living standards but may have environmental costs.",
+    "prerequisites": ["gdp_measurement", "macroeconomic_equilibrium"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Confusing short-run recovery with long-run potential growth",
+      "Assuming GDP growth always means improved wellbeing",
+      "Forgetting the distinction between actual and potential growth"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["AD_AS_model", "production_possibility_curve", "business_cycle"]
+  },
+  {
+    "id": "business_cycle",
+    "name": "Business Cycle",
+    "unit": "macroeconomics",
+    "description": "Regular fluctuations in economic activity around the long-run trend, consisting of expansion, peak, contraction (recession), and trough phases. Understanding cycles informs counter-cyclical policy to smooth fluctuations.",
+    "prerequisites": ["economic_growth", "macroeconomic_equilibrium"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Assuming cycles are predictable in timing and magnitude",
+      "Confusing the cycle with long-run trend growth",
+      "Forgetting that different sectors experience cycles differently"
+    ],
+    "ib_command_terms": ["explain", "analyze"],
+    "key_diagrams": ["business_cycle_diagram"]
+  },
+  {
+    "id": "unemployment",
+    "name": "Unemployment",
+    "unit": "macroeconomics",
+    "description": "When people willing and able to work cannot find employment, measured as a percentage of the labor force. Types include cyclical (demand-deficient), structural, frictional, and seasonal, with different causes and policy solutions.",
+    "prerequisites": ["macroeconomic_equilibrium"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Including those not seeking work in unemployment - they're not in labor force",
+      "Assuming zero unemployment is achievable or desirable",
+      "Confusing the unemployment rate with underemployment or hidden unemployment"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze", "evaluate"],
+    "key_diagrams": ["labor_market_diagram"]
+  },
+  {
+    "id": "natural_rate_of_unemployment",
+    "name": "Natural Rate of Unemployment",
+    "unit": "macroeconomics",
+    "description": "The unemployment rate when the labor market is in equilibrium, consisting of structural, frictional, and seasonal unemployment but no cyclical unemployment. This rate is consistent with stable inflation and full employment.",
+    "prerequisites": ["unemployment"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Thinking 'natural' means optimal or unchangeable - it can be reduced by supply-side policies",
+      "Confusing natural rate with zero unemployment",
+      "Assuming the natural rate is constant across time and countries"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze"],
+    "key_diagrams": ["labor_market_diagram", "phillips_curve"]
+  },
+  {
+    "id": "inflation",
+    "name": "Inflation",
+    "unit": "macroeconomics",
+    "description": "A sustained increase in the general price level, measured by consumer price indices. Causes include demand-pull (excess AD) and cost-push (rising production costs). Moderate inflation may be acceptable, but high inflation distorts economic decisions.",
+    "prerequisites": ["gdp_measurement", "macroeconomic_equilibrium"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Confusing inflation with high prices - inflation is the rate of change",
+      "Assuming all inflation is bad - moderate inflation may support growth",
+      "Forgetting that different groups (debtors, creditors) are affected differently"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze", "evaluate"],
+    "key_diagrams": ["AD_AS_model", "demand_pull_inflation", "cost_push_inflation"]
+  },
+  {
+    "id": "deflation",
+    "name": "Deflation",
+    "unit": "macroeconomics",
+    "description": "A sustained decrease in the general price level, which can be harmful as consumers delay purchases and debt burdens increase in real terms. Distinguished from disinflation (falling inflation rate) and often associated with recession.",
+    "prerequisites": ["inflation"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Thinking deflation is always good because prices fall - it discourages spending",
+      "Confusing deflation with disinflation",
+      "Forgetting the debt-deflation spiral mechanism"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze", "evaluate"],
+    "key_diagrams": ["AD_AS_model", "deflationary_spiral"]
+  },
+  {
+    "id": "fiscal_policy",
+    "name": "Fiscal Policy",
+    "unit": "macroeconomics",
+    "description": "Government use of taxation and spending to influence aggregate demand and achieve macroeconomic objectives. Expansionary policy (increased spending or tax cuts) boosts AD; contractionary policy reduces it. Subject to time lags and political constraints.",
+    "prerequisites": ["aggregate_demand", "government_spending", "macroeconomic_equilibrium"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Assuming fiscal policy affects only AD - it can also impact LRAS through infrastructure",
+      "Forgetting crowding out effects reducing policy effectiveness",
+      "Ignoring time lags between implementation and economic impact"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["AD_AS_model", "fiscal_policy_diagram"]
+  },
+  {
+    "id": "multiplier_effect",
+    "name": "Multiplier Effect",
+    "unit": "macroeconomics",
+    "description": "The magnified impact on national income from an initial change in spending. The multiplier equals 1/(1-MPC) or 1/MPW, showing how injections create successive rounds of spending. Size depends on marginal propensities to consume, save, tax, and import.",
+    "prerequisites": ["fiscal_policy", "consumption"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Assuming the multiplier is constant - it varies with economic conditions",
+      "Forgetting that leakages (savings, taxes, imports) reduce the multiplier",
+      "Not recognizing that the multiplier works in reverse for spending cuts"
+    ],
+    "ib_command_terms": ["explain", "calculate", "analyze", "evaluate"],
+    "key_diagrams": ["multiplier_diagram"]
+  },
+  {
+    "id": "automatic_stabilizers",
+    "name": "Automatic Stabilizers",
+    "unit": "macroeconomics",
+    "description": "Built-in fiscal mechanisms that automatically dampen economic fluctuations without policy action. Progressive taxes and welfare payments increase during recessions (boosting AD) and decrease during expansions (cooling AD).",
+    "prerequisites": ["fiscal_policy", "business_cycle"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Confusing automatic stabilizers with discretionary fiscal policy",
+      "Assuming automatic stabilizers fully eliminate business cycles",
+      "Forgetting that automatic stabilizers cause cyclical budget deficits"
+    ],
+    "ib_command_terms": ["explain", "analyze"],
+    "key_diagrams": ["automatic_stabilizers_diagram"]
+  },
+  {
+    "id": "monetary_policy",
+    "name": "Monetary Policy",
+    "unit": "macroeconomics",
+    "description": "Central bank actions to influence interest rates and money supply to achieve macroeconomic objectives. Expansionary policy (lower rates) stimulates borrowing and spending; contractionary policy (higher rates) restrains inflation.",
+    "prerequisites": ["aggregate_demand", "macroeconomic_equilibrium"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Assuming monetary policy only works through interest rates - expectations and exchange rates matter",
+      "Forgetting transmission lags between rate changes and economic effects",
+      "Thinking monetary policy is equally effective in recessions and expansions"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["money_market_diagram", "AD_AS_model"]
+  },
+  {
+    "id": "money_supply",
+    "name": "Money Supply",
+    "unit": "macroeconomics",
+    "description": "The total amount of money circulating in an economy, including currency and bank deposits. Central banks influence money supply through open market operations, reserve requirements, and lending facilities, affecting interest rates and credit availability.",
+    "prerequisites": ["monetary_policy"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Thinking money supply is just physical cash - most money is bank deposits",
+      "Assuming central banks directly control money supply - they influence it",
+      "Confusing money creation by banks with government printing money"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze"],
+    "key_diagrams": ["money_market_diagram"]
+  },
+  {
+    "id": "interest_rates",
+    "name": "Interest Rates",
+    "unit": "macroeconomics",
+    "description": "The cost of borrowing or reward for saving, serving as the primary monetary policy tool. Changes affect consumption, investment, exchange rates, and inflation expectations. Nominal rates adjust for inflation to give real interest rates.",
+    "prerequisites": ["monetary_policy", "money_supply"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Confusing nominal and real interest rates",
+      "Assuming rate cuts always stimulate spending - liquidity trap limits exist",
+      "Forgetting that different interest rates exist for different maturities and risks"
+    ],
+    "ib_command_terms": ["explain", "analyze", "calculate"],
+    "key_diagrams": ["money_market_diagram", "investment_demand_curve"]
+  },
+  {
+    "id": "supply_side_policies",
+    "name": "Supply-Side Policies",
+    "unit": "macroeconomics",
+    "description": "Government policies aimed at increasing aggregate supply by improving productive capacity and efficiency. Market-based approaches include deregulation and tax cuts; interventionist approaches include education and infrastructure investment.",
+    "prerequisites": ["long_run_aggregate_supply", "macroeconomic_equilibrium"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Assuming supply-side policies work quickly - effects take years to materialize",
+      "Confusing supply-side with demand-side effects of tax cuts",
+      "Thinking all supply-side policies are free-market - interventionist options exist"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["LRAS_shift_diagram", "AD_AS_model"]
+  },
+  {
+    "id": "phillips_curve",
+    "name": "Phillips Curve",
+    "unit": "macroeconomics",
+    "description": "Shows the inverse relationship between unemployment and inflation in the short run, implying a policy trade-off. The long-run Phillips curve is vertical at the natural rate, suggesting no permanent trade-off as expectations adjust.",
+    "prerequisites": ["inflation", "unemployment", "natural_rate_of_unemployment"],
+    "difficulty": 5,
+    "common_misconceptions": [
+      "Assuming the trade-off is permanent - it breaks down in the long run",
+      "Forgetting stagflation can occur with both high unemployment and inflation",
+      "Not recognizing expectations-augmented Phillips curve adjustments"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["short_run_phillips_curve", "long_run_phillips_curve"]
+  },
+  {
+    "id": "income_distribution",
+    "name": "Income Distribution",
+    "unit": "macroeconomics",
+    "description": "How total income is divided among individuals or groups in society, measured by the Lorenz curve and Gini coefficient. Inequality has efficiency and equity implications, influenced by market forces, taxation, and transfer policies.",
+    "prerequisites": ["gdp_measurement"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Confusing income inequality with poverty - they're related but distinct",
+      "Assuming redistribution always reduces efficiency - evidence is mixed",
+      "Forgetting to distinguish between income and wealth inequality"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["lorenz_curve", "gini_coefficient"]
+  },
+  {
+    "id": "absolute_advantage",
+    "name": "Absolute Advantage",
+    "unit": "international_economics",
+    "description": "When a country can produce a good using fewer resources (higher productivity) than another country. While intuitive, absolute advantage alone doesn't determine trade patterns - comparative advantage is more relevant for mutual gains from trade.",
+    "prerequisites": [],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Assuming a country with no absolute advantage cannot benefit from trade",
+      "Confusing absolute with comparative advantage",
+      "Thinking the country with absolute advantage in everything should export everything"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate"],
+    "key_diagrams": ["absolute_advantage_table"]
+  },
+  {
+    "id": "comparative_advantage",
+    "name": "Comparative Advantage",
+    "unit": "international_economics",
+    "description": "When a country can produce a good at a lower opportunity cost than another country. Even if one country is more productive in all goods, both benefit by specializing in their comparative advantage and trading. The basis for international trade theory.",
+    "prerequisites": ["opportunity_cost", "absolute_advantage"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Confusing lower opportunity cost with lower absolute cost",
+      "Calculating comparative advantage incorrectly - must compare opportunity costs",
+      "Assuming comparative advantage is permanent - it can shift over time"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate", "analyze"],
+    "key_diagrams": ["comparative_advantage_table", "production_possibility_curves"]
+  },
+  {
+    "id": "free_trade",
+    "name": "Free Trade",
+    "unit": "international_economics",
+    "description": "International trade without government barriers such as tariffs or quotas. Based on comparative advantage, free trade increases world output, provides consumer choice, and promotes competition, but creates winners and losers within countries.",
+    "prerequisites": ["comparative_advantage"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Assuming free trade benefits everyone equally - adjustment costs fall on some groups",
+      "Thinking free trade exists in practice - all countries have some barriers",
+      "Ignoring dynamic gains from trade like technology transfer"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["trade_diagram"]
+  },
+  {
+    "id": "world_trade_organization",
+    "name": "World Trade Organization (WTO)",
+    "unit": "international_economics",
+    "description": "The international organization overseeing trade rules between nations, promoting trade liberalization through negotiations and dispute resolution. Operates on principles of non-discrimination (MFN), reciprocity, and binding commitments.",
+    "prerequisites": ["free_trade"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Thinking WTO sets trade policy - it facilitates agreements between members",
+      "Assuming WTO rulings are immediately enforced - compliance is voluntary",
+      "Confusing WTO with regional trade agreements"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": []
+  },
+  {
+    "id": "tariffs",
+    "name": "Tariffs",
+    "unit": "international_economics",
+    "description": "Taxes on imported goods that raise their price, protecting domestic producers but harming consumers and creating deadweight loss. Tariffs generate government revenue but can provoke retaliation and reduce overall welfare.",
+    "prerequisites": ["free_trade", "consumer_surplus", "producer_surplus"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Thinking tariffs only affect foreign producers - domestic consumers pay higher prices",
+      "Forgetting the welfare loss even when tariff revenue is considered",
+      "Assuming tariffs protect jobs long-term - they reduce competitiveness"
+    ],
+    "ib_command_terms": ["explain", "analyze", "calculate", "evaluate", "discuss"],
+    "key_diagrams": ["tariff_diagram"]
+  },
+  {
+    "id": "quotas",
+    "name": "Quotas",
+    "unit": "international_economics",
+    "description": "Quantitative limits on imports that restrict supply and raise domestic prices. Unlike tariffs, quotas don't generate government revenue (unless import licenses are auctioned) - the quota rent goes to those holding import rights.",
+    "prerequisites": ["tariffs"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Confusing quota effects with tariff effects - quota rent distribution differs",
+      "Forgetting that quotas create stronger protection when demand increases",
+      "Assuming quotas are less distortionary than tariffs"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["quota_diagram"]
+  },
+  {
+    "id": "subsidies_trade",
+    "name": "Export Subsidies and Domestic Subsidies",
+    "unit": "international_economics",
+    "description": "Government payments to domestic producers that lower production costs and export prices, enabling them to compete against imports or in foreign markets. Creates trade distortions and often provokes countervailing duties from trading partners.",
+    "prerequisites": ["subsidies", "free_trade"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Thinking subsidies only benefit domestic producers - foreign consumers may gain",
+      "Forgetting taxpayer costs and efficiency losses from subsidies",
+      "Assuming agricultural subsidies have minimal trade impacts"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["subsidy_trade_diagram"]
+  },
+  {
+    "id": "arguments_for_protection",
+    "name": "Arguments for Trade Protection",
+    "unit": "international_economics",
+    "description": "Justifications for trade barriers include infant industry protection, national security, anti-dumping measures, environmental standards, and protection of employment. Each argument has merit in specific contexts but is often abused for protectionist purposes.",
+    "prerequisites": ["tariffs", "quotas"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Accepting protectionist arguments at face value - special interests often lobby",
+      "Assuming infant industries always grow up - protection can become permanent",
+      "Ignoring that protection in one sector harms other sectors"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["infant_industry_diagram"]
+  },
+  {
+    "id": "economic_integration",
+    "name": "Economic Integration",
+    "unit": "international_economics",
+    "description": "The process of reducing trade barriers between countries, ranging from preferential trade agreements to free trade areas, customs unions, common markets, and economic unions. Deeper integration involves policy harmonization and factor mobility.",
+    "prerequisites": ["free_trade", "tariffs"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Confusing levels of integration - customs unions have common external tariffs, FTAs don't",
+      "Assuming integration always creates trade - trade diversion can reduce welfare",
+      "Forgetting political integration aspects beyond economics"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["integration_levels_diagram"]
+  },
+  {
+    "id": "exchange_rates",
+    "name": "Exchange Rates",
+    "unit": "international_economics",
+    "description": "The price of one currency in terms of another, determined in foreign exchange markets. Appreciation makes exports expensive and imports cheap; depreciation has opposite effects. Exchange rates affect trade competitiveness and inflation.",
+    "prerequisites": ["net_exports"],
+    "difficulty": 2,
+    "common_misconceptions": [
+      "Confusing appreciation with depreciation - appreciation means currency strengthens",
+      "Thinking exchange rates only affect trade - capital flows and inflation matter too",
+      "Forgetting to distinguish nominal and real exchange rates"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate", "analyze"],
+    "key_diagrams": ["foreign_exchange_market_diagram"]
+  },
+  {
+    "id": "floating_exchange_rates",
+    "name": "Floating Exchange Rate System",
+    "unit": "international_economics",
+    "description": "A system where exchange rates are determined by market forces of supply and demand without central bank intervention. Advantages include automatic adjustment to shocks and independent monetary policy; disadvantages include volatility and uncertainty.",
+    "prerequisites": ["exchange_rates"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Assuming floating rates eliminate balance of payments problems - adjustment takes time",
+      "Thinking there's no intervention in floating systems - managed floats are common",
+      "Forgetting that currency volatility creates business uncertainty"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["foreign_exchange_market_diagram", "currency_depreciation"]
+  },
+  {
+    "id": "fixed_exchange_rates",
+    "name": "Fixed Exchange Rate System",
+    "unit": "international_economics",
+    "description": "A system where the government maintains the exchange rate at a set level through central bank intervention. Provides stability and price discipline but requires large foreign exchange reserves and sacrifices monetary policy independence.",
+    "prerequisites": ["exchange_rates", "monetary_policy"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Assuming fixed rates never change - they can be revalued or devalued",
+      "Forgetting the trilemma - can't have fixed rates, free capital flows, and independent monetary policy",
+      "Thinking fixed rates eliminate speculation - they may attract it"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["fixed_exchange_rate_diagram"]
+  },
+  {
+    "id": "managed_exchange_rates",
+    "name": "Managed Exchange Rate System",
+    "unit": "international_economics",
+    "description": "A hybrid system where rates are primarily market-determined but central banks intervene to reduce volatility or achieve targets. Most common in practice, combining flexibility with some stability, though open to accusations of manipulation.",
+    "prerequisites": ["floating_exchange_rates", "fixed_exchange_rates"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Assuming managed floats are stable - they can still be volatile",
+      "Thinking intervention always succeeds - markets can overwhelm central banks",
+      "Confusing managed floats with currency manipulation"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["managed_float_diagram"]
+  },
+  {
+    "id": "balance_of_payments",
+    "name": "Balance of Payments",
+    "unit": "international_economics",
+    "description": "A record of all economic transactions between a country and the rest of the world, comprising the current account (trade, income, transfers), capital account (capital transfers), and financial account (investment flows). Must balance overall.",
+    "prerequisites": ["exchange_rates", "net_exports"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Thinking a current account deficit is always bad - it may fund investment",
+      "Confusing the balance of payments with trade balance - BOP includes more",
+      "Forgetting that BOP always balances - deficits in one account are offset elsewhere"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate", "analyze"],
+    "key_diagrams": ["balance_of_payments_structure"]
+  },
+  {
+    "id": "current_account",
+    "name": "Current Account",
+    "unit": "international_economics",
+    "description": "The section of the balance of payments recording trade in goods and services, primary income (investment returns), and secondary income (transfers). Current account deficits must be financed by capital/financial account surpluses (borrowing or selling assets).",
+    "prerequisites": ["balance_of_payments"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Equating current account with trade balance - income and transfers also matter",
+      "Assuming deficits require immediate correction - sustainable if financing continues",
+      "Forgetting that a deficit means the country is a net borrower from abroad"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["current_account_components"]
+  },
+  {
+    "id": "financial_account",
+    "name": "Financial Account",
+    "unit": "international_economics",
+    "description": "Records international investment flows including foreign direct investment, portfolio investment, and changes in reserve assets. A surplus indicates net capital inflow, financing a current account deficit; a deficit indicates net capital outflow.",
+    "prerequisites": ["balance_of_payments"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Confusing FDI with portfolio investment - FDI implies control, portfolio doesn't",
+      "Thinking capital inflows are always beneficial - they can cause currency appreciation and bubbles",
+      "Forgetting that hot money flows can reverse quickly"
+    ],
+    "ib_command_terms": ["explain", "analyze"],
+    "key_diagrams": ["financial_account_components"]
+  },
+  {
+    "id": "current_account_deficit",
+    "name": "Current Account Deficit",
+    "unit": "international_economics",
+    "description": "When imports of goods and services plus income outflows exceed exports and income inflows. May indicate strong domestic demand or competitiveness problems. Requires foreign borrowing or asset sales to finance, potentially creating debt sustainability issues.",
+    "prerequisites": ["current_account", "exchange_rates"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Assuming all deficits are problematic - they may finance productive investment",
+      "Forgetting that deficits and surpluses are two sides of the same coin globally",
+      "Thinking depreciation alone fixes deficits - J-curve effects delay improvement"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["current_account_deficit_causes"]
+  },
+  {
+    "id": "marshall_lerner_condition",
+    "name": "Marshall-Lerner Condition",
+    "unit": "international_economics",
+    "description": "States that currency depreciation improves the trade balance only if the sum of price elasticities of demand for exports and imports exceeds one. If demand is inelastic, depreciation worsens the balance as lower prices don't sufficiently increase volumes.",
+    "prerequisites": ["price_elasticity_of_demand", "exchange_rates", "current_account_deficit"],
+    "difficulty": 5,
+    "common_misconceptions": [
+      "Assuming depreciation always helps trade balance - elasticities must be sufficient",
+      "Forgetting that elasticities increase over time as contracts adjust",
+      "Not connecting ML condition to J-curve dynamics"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate"],
+    "key_diagrams": ["marshall_lerner_diagram"]
+  },
+  {
+    "id": "j_curve",
+    "name": "J-Curve Effect",
+    "unit": "international_economics",
+    "description": "The pattern where currency depreciation initially worsens the trade balance before improving it. In the short run, volumes are fixed by contracts while import prices rise immediately. Over time, volumes adjust and the balance improves.",
+    "prerequisites": ["marshall_lerner_condition"],
+    "difficulty": 5,
+    "common_misconceptions": [
+      "Expecting immediate trade balance improvement from depreciation",
+      "Forgetting that the J-curve assumes Marshall-Lerner holds eventually",
+      "Not recognizing the length of the J-curve varies across countries"
+    ],
+    "ib_command_terms": ["explain", "analyze"],
+    "key_diagrams": ["j_curve_diagram"]
+  },
+  {
+    "id": "terms_of_trade",
+    "name": "Terms of Trade",
+    "unit": "international_economics",
+    "description": "The ratio of export prices to import prices, measuring how much imports a country can obtain for its exports. An improvement means exports buy more imports; deterioration means exports buy less. Affects living standards and development.",
+    "prerequisites": ["comparative_advantage", "exchange_rates"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Confusing terms of trade with trade balance - they measure different things",
+      "Assuming improved terms of trade are always beneficial - may reduce export competitiveness",
+      "Forgetting commodity exporters face volatile terms of trade"
+    ],
+    "ib_command_terms": ["define", "explain", "calculate", "analyze"],
+    "key_diagrams": ["terms_of_trade_calculation"]
+  },
+  {
+    "id": "economic_development",
+    "name": "Economic Development",
+    "unit": "macroeconomics",
+    "description": "A broad concept encompassing improvements in living standards, reduction in poverty and inequality, and enhancement of human capabilities beyond simple GDP growth. Measured by indicators like HDI, which includes health, education, and income.",
+    "prerequisites": ["economic_growth", "income_distribution"],
+    "difficulty": 3,
+    "common_misconceptions": [
+      "Equating development with growth - development includes non-income dimensions",
+      "Assuming a single path to development - countries follow diverse trajectories",
+      "Ignoring institutional and social factors that enable development"
+    ],
+    "ib_command_terms": ["define", "explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["hdi_components"]
+  },
+  {
+    "id": "barriers_to_development",
+    "name": "Barriers to Economic Development",
+    "unit": "macroeconomics",
+    "description": "Obstacles preventing developing countries from achieving sustained growth and improved living standards. Include poverty traps, institutional weakness, lack of infrastructure, human capital deficiencies, geographic disadvantages, and unfavorable terms of trade.",
+    "prerequisites": ["economic_development"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Assuming one barrier is most important - barriers are interconnected",
+      "Ignoring country-specific contexts in analyzing development challenges",
+      "Thinking foreign aid alone can overcome structural barriers"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["poverty_trap_diagram"]
+  },
+  {
+    "id": "foreign_direct_investment",
+    "name": "Foreign Direct Investment",
+    "unit": "international_economics",
+    "description": "Investment by firms in productive assets abroad, involving ownership and control of operations. FDI can bring capital, technology, and management skills to host countries but may also cause profit repatriation, crowding out, and political concerns.",
+    "prerequisites": ["investment", "economic_development"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Assuming FDI always benefits host countries - effects depend on policies and type",
+      "Confusing FDI with portfolio investment - FDI involves control",
+      "Ignoring environmental and labor standards concerns with FDI"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["fdi_flows_diagram"]
+  },
+  {
+    "id": "foreign_aid",
+    "name": "Foreign Aid",
+    "unit": "international_economics",
+    "description": "Financial assistance from developed countries or international organizations to developing countries, including bilateral aid, multilateral aid, and humanitarian assistance. Debates exist about effectiveness, conditionality, and dependency effects.",
+    "prerequisites": ["economic_development"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Assuming aid directly leads to development - governance and institutions matter",
+      "Ignoring tied aid that benefits donor countries",
+      "Thinking more aid always means better outcomes - absorption capacity matters"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["aid_flows_diagram"]
+  },
+  {
+    "id": "sustainability",
+    "name": "Sustainable Development",
+    "unit": "macroeconomics",
+    "description": "Development that meets present needs without compromising future generations' ability to meet their own needs. Requires balancing economic growth with environmental protection and social equity, addressing negative externalities and resource depletion.",
+    "prerequisites": ["economic_growth", "negative_externalities", "common_pool_resources"],
+    "difficulty": 4,
+    "common_misconceptions": [
+      "Equating sustainability with environmental protection alone - includes social dimensions",
+      "Assuming growth and sustainability are incompatible - sustainable growth is possible",
+      "Ignoring intergenerational equity considerations"
+    ],
+    "ib_command_terms": ["explain", "analyze", "evaluate", "discuss"],
+    "key_diagrams": ["sustainability_diagram", "environmental_kuznets_curve"]
+  }
+]
