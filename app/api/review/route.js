@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { geminiModel } from "@/lib/gemini";
+import { generateCompletion } from "@/lib/grok";
 
 export async function POST(request) {
   try {
@@ -12,9 +12,9 @@ export async function POST(request) {
       );
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!process.env.GROK_API_KEY) {
       return NextResponse.json(
-        { error: "GEMINI_API_KEY is not configured" },
+        { error: "GROK_API_KEY is not configured" },
         { status: 500 },
       );
     }
@@ -64,9 +64,7 @@ Return ONLY valid JSON in this exact format:
   "realWorldExample": "A brief, current real-world example that illustrates this concept clearly."
 }`;
 
-    const result = await geminiModel.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const text = await generateCompletion(prompt);
 
     let cleanedText = text.trim();
     if (cleanedText.startsWith("```json")) {
@@ -91,7 +89,6 @@ Return ONLY valid JSON in this exact format:
       );
     }
 
-    // Validate required fields
     if (!review.definition || !review.keyPoints) {
       return NextResponse.json(
         { error: "Invalid response structure from AI. Please try again." },
@@ -103,7 +100,6 @@ Return ONLY valid JSON in this exact format:
   } catch (error) {
     console.error("Error generating review:", error);
 
-    // Handle rate limiting
     if (error.status === 429) {
       return NextResponse.json(
         {

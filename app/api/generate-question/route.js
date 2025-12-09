@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateQuestion } from "@/lib/gemini";
+import { generateQuestion } from "@/lib/grok";
 
 export async function POST(request) {
   try {
@@ -12,9 +12,9 @@ export async function POST(request) {
       );
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!process.env.GROK_API_KEY) {
       return NextResponse.json(
-        { error: "GEMINI_API_KEY is not configured" },
+        { error: "GROK_API_KEY is not configured" },
         { status: 500 },
       );
     }
@@ -29,11 +29,10 @@ export async function POST(request) {
   } catch (error) {
     console.error("Error generating question:", error);
 
-    // Handle rate limiting
     if (
       error.status === 429 ||
       error.message?.includes("429") ||
-      error.message?.includes("quota")
+      error.message?.includes("rate")
     ) {
       return NextResponse.json(
         {
@@ -43,7 +42,6 @@ export async function POST(request) {
       );
     }
 
-    // Handle network errors
     if (error.code === "ECONNREFUSED" || error.code === "ETIMEDOUT") {
       return NextResponse.json(
         { error: "Unable to connect to AI service. Please try again." },

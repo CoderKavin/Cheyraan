@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { geminiModel } from "@/lib/gemini";
+import { generateCompletion } from "@/lib/grok";
 
 export async function POST(request) {
   try {
@@ -13,9 +13,9 @@ export async function POST(request) {
       );
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!process.env.GROK_API_KEY) {
       return NextResponse.json(
-        { error: "GEMINI_API_KEY is not configured" },
+        { error: "GROK_API_KEY is not configured" },
         { status: 500 },
       );
     }
@@ -47,9 +47,7 @@ Return ONLY valid JSON in this exact format:
   "practiceAdvice": "One specific, actionable tip for practicing this concept. Be concrete - suggest a specific type of question or scenario to work through."
 }`;
 
-    const result = await geminiModel.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const text = await generateCompletion(prompt);
 
     let cleanedText = text.trim();
     if (cleanedText.startsWith("```json")) {
@@ -74,7 +72,6 @@ Return ONLY valid JSON in this exact format:
       );
     }
 
-    // Validate required fields
     if (
       !explanation.likelyReasoning ||
       !explanation.misconception ||
@@ -90,7 +87,6 @@ Return ONLY valid JSON in this exact format:
   } catch (error) {
     console.error("Error generating explanation:", error);
 
-    // Handle rate limiting
     if (error.status === 429) {
       return NextResponse.json(
         {

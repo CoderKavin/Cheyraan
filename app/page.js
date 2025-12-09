@@ -51,7 +51,6 @@ export default function Home() {
   const [showExplanation, setShowExplanation] = useState(false);
   const [currentHistoryId, setCurrentHistoryId] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
-  const [panelExpanded, setPanelExpanded] = useState(false);
 
   const questionStartTime = useRef(null);
 
@@ -165,7 +164,6 @@ export default function Home() {
     setError(null);
     setShowExplanation(false);
     setCurrentHistoryId(null);
-    setPanelExpanded(true);
   };
 
   const handlePracticeWeakest = () => {
@@ -199,12 +197,6 @@ export default function Home() {
     if (progress.attempts > 0)
       return { class: "learning", label: `${progress.confidence}%` };
     return { class: "new", label: "New" };
-  };
-
-  const getProgressClass = (confidence) => {
-    if (confidence >= 70) return "";
-    if (confidence >= 40) return "medium";
-    return "low";
   };
 
   // Group concepts by unit
@@ -248,327 +240,310 @@ export default function Home() {
         <button className="user-btn">S</button>
       </header>
 
-      {/* Stats Bar */}
-      {stats && (
-        <div className="stats-bar">
-          <div className="stat-card">
-            <div className="stat-label">Mastered</div>
-            <div className="stat-value success">{stats.conceptsMastered}</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-label">In Progress</div>
-            <div className="stat-value">
-              {stats.conceptsAttempted - stats.conceptsMastered}
+      <main className="main">
+        {/* Stats */}
+        {stats && (
+          <div className="stats">
+            <div className="stat">
+              <div className="stat-label">Mastered</div>
+              <div className="stat-value green">{stats.conceptsMastered}</div>
             </div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-label">Remaining</div>
-            <div className="stat-value">
-              {stats.totalConcepts - stats.conceptsAttempted}
-            </div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-label">Accuracy</div>
-            <div className="stat-value accent">{stats.overallAccuracy}%</div>
-          </div>
-        </div>
-      )}
-
-      {/* Main Content */}
-      {activeTab === "practice" && (
-        <div className="main-grid">
-          {/* Concepts List */}
-          <div className="concepts-section">
-            <div className="section-header">
-              <div>
-                <h2 className="section-title">Concepts</h2>
-                <p className="section-subtitle">Select a concept to practice</p>
+            <div className="stat">
+              <div className="stat-label">In Progress</div>
+              <div className="stat-value">
+                {stats.conceptsAttempted - stats.conceptsMastered}
               </div>
             </div>
+            <div className="stat">
+              <div className="stat-label">Remaining</div>
+              <div className="stat-value">
+                {stats.totalConcepts - stats.conceptsAttempted}
+              </div>
+            </div>
+            <div className="stat">
+              <div className="stat-label">Accuracy</div>
+              <div className="stat-value blue">{stats.overallAccuracy}%</div>
+            </div>
+          </div>
+        )}
 
-            {Object.entries(groupedConcepts).map(([unit, unitConcepts]) => (
-              <div key={unit} className="unit-group">
-                <div className="unit-label">{unitLabels[unit]}</div>
-                <div className="concept-list">
-                  {unitConcepts.map((concept, idx) => {
-                    const progress = getConceptProgress(concept.id);
-                    const badge = getBadgeInfo(concept);
-                    const prereqs = arePrerequisitesMet(concept, concepts);
-                    const isSelected = selectedConceptId === concept.id;
-                    const globalIdx = concepts.findIndex(
-                      (c) => c.id === concept.id,
-                    );
+        {/* Practice Tab */}
+        {activeTab === "practice" && (
+          <div className="layout">
+            {/* Concepts List */}
+            <div className="concepts-panel">
+              <div className="panel-header">
+                <div className="panel-title">Concepts</div>
+                <div className="panel-subtitle">
+                  Select a concept to practice
+                </div>
+              </div>
 
-                    return (
-                      <div
-                        key={concept.id}
-                        className={`concept-item ${isSelected ? "selected" : ""} ${!prereqs.met ? "locked" : ""}`}
-                        onClick={() =>
-                          prereqs.met && handleSelectConcept(concept.id)
-                        }
-                      >
-                        <div className="concept-icon">
-                          {icons[globalIdx % icons.length]}
-                        </div>
-                        <div className="concept-info">
-                          <div className="concept-name">{concept.name}</div>
-                          <div className="concept-desc">
-                            {concept.description}
+              <div className="concepts-list">
+                {Object.entries(groupedConcepts).map(([unit, unitConcepts]) => (
+                  <div key={unit} className="unit-section">
+                    <div className="unit-header">{unitLabels[unit]}</div>
+                    {unitConcepts.map((concept, idx) => {
+                      const badge = getBadgeInfo(concept);
+                      const prereqs = arePrerequisitesMet(concept, concepts);
+                      const isSelected = selectedConceptId === concept.id;
+                      const globalIdx = concepts.findIndex(
+                        (c) => c.id === concept.id,
+                      );
+
+                      return (
+                        <div
+                          key={concept.id}
+                          className={`concept ${isSelected ? "selected" : ""} ${!prereqs.met ? "locked" : ""}`}
+                          onClick={() =>
+                            prereqs.met && handleSelectConcept(concept.id)
+                          }
+                        >
+                          <div className="concept-icon">
+                            {icons[globalIdx % icons.length]}
                           </div>
-                        </div>
-                        <div className="concept-meta">
-                          <div className="concept-progress">
-                            <div
-                              className={`concept-progress-fill ${getProgressClass(progress.confidence)}`}
-                              style={{ width: `${progress.confidence}%` }}
-                            />
+                          <div className="concept-info">
+                            <div className="concept-name">{concept.name}</div>
+                            <div className="concept-desc">
+                              {concept.description}
+                            </div>
                           </div>
                           <span className={`concept-badge ${badge.class}`}>
                             {badge.label}
                           </span>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                      );
+                    })}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-
-          {/* Practice Panel */}
-          <div className={`practice-panel ${panelExpanded ? "expanded" : ""}`}>
-            <div
-              className="practice-header"
-              onClick={() => setPanelExpanded(!panelExpanded)}
-            >
-              <h2 className="practice-title">Practice</h2>
-              <p className="practice-subtitle">
-                {selectedConcept ? selectedConcept.name : "Select a concept"}
-              </p>
             </div>
 
-            {/* Quick Actions */}
-            <div className="quick-actions">
-              <button className="quick-btn" onClick={handlePracticeWeakest}>
-                Weakest
-              </button>
-              <button className="quick-btn" onClick={handlePracticeRecommended}>
-                Recommended
-              </button>
-            </div>
-
-            {/* Selected Concept Info */}
-            {selectedConcept && conceptProgress && !question && !isLoading && (
-              <div className="selected-info">
-                <div className="selected-name">{selectedConcept.name}</div>
-                <div className="selected-stats">
-                  <span>
-                    {conceptProgress.correct}/{conceptProgress.attempts} correct
-                  </span>
-                  <span>{conceptProgress.confidence}% confidence</span>
-                </div>
-              </div>
-            )}
-
-            {/* Error */}
-            {error && (
-              <div className="error">
-                <span>⚠️</span>
-                <span>{error}</span>
-              </div>
-            )}
-
-            {/* Generate Button */}
-            {!question && !isLoading && (
-              <>
-                <button
-                  className="btn btn-primary btn-full"
-                  onClick={generateQuestion}
-                  disabled={!selectedConcept || !prereqStatus.met}
-                >
-                  Generate Question
-                </button>
+            {/* Practice Panel */}
+            <div className="practice-panel">
+              <div className="practice-header">
+                <div className="practice-title">Practice</div>
                 {selectedConcept && (
-                  <button
-                    className="btn btn-secondary btn-full"
-                    onClick={() => setShowReview(true)}
-                    style={{ marginTop: 8 }}
-                  >
-                    Review Concept
-                  </button>
+                  <div className="practice-concept">{selectedConcept.name}</div>
                 )}
-              </>
-            )}
-
-            {/* Loading */}
-            {isLoading && (
-              <div className="loading">
-                <div className="spinner"></div>
-                <span className="loading-text">Generating question...</span>
               </div>
-            )}
 
-            {/* Question */}
-            {question && (
-              <>
-                <div className="question-box">
-                  <div className="question-text">{question.question}</div>
+              <div className="practice-body">
+                {/* Quick Actions */}
+                <div className="quick-actions">
+                  <button className="quick-btn" onClick={handlePracticeWeakest}>
+                    Weakest
+                  </button>
+                  <button
+                    className="quick-btn"
+                    onClick={handlePracticeRecommended}
+                  >
+                    Recommended
+                  </button>
                 </div>
 
-                <div className="options">
-                  {Object.entries(question.options).map(([key, value]) => (
-                    <div
-                      key={key}
-                      className={getOptionClass(key)}
-                      onClick={() => !isSubmitted && setSelectedAnswer(key)}
-                    >
-                      <div className="option-key">{key}</div>
-                      <div className="option-text">{value}</div>
-                    </div>
-                  ))}
-                </div>
+                {/* Concept Info */}
+                {selectedConcept && !question && !isLoading && (
+                  <div className="concept-info-box">
+                    <h3>{selectedConcept.name}</h3>
+                    <p>{selectedConcept.description}</p>
+                    {conceptProgress && conceptProgress.attempts > 0 && (
+                      <div className="concept-stats">
+                        <span>
+                          {conceptProgress.correct}/{conceptProgress.attempts}{" "}
+                          correct
+                        </span>
+                        <span>{conceptProgress.confidence}% confidence</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Error */}
+                {error && <div className="error">{error}</div>}
 
                 {/* Buttons */}
-                <div style={{ display: "flex", gap: 8 }}>
-                  {!isSubmitted ? (
+                {!question && !isLoading && (
+                  <>
                     <button
-                      className="btn btn-primary btn-full"
-                      onClick={handleSubmit}
-                      disabled={!selectedAnswer}
+                      className="btn btn-primary"
+                      onClick={generateQuestion}
+                      disabled={!selectedConcept || !prereqStatus.met}
                     >
-                      Submit
+                      Generate Question
                     </button>
-                  ) : (
-                    <>
+                    {selectedConcept && (
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => setShowReview(true)}
+                      >
+                        Review Concept
+                      </button>
+                    )}
+                  </>
+                )}
+
+                {/* Loading */}
+                {isLoading && (
+                  <div className="loading">
+                    <div className="spinner"></div>
+                    <span className="loading-text">Generating question...</span>
+                  </div>
+                )}
+
+                {/* Question */}
+                {question && (
+                  <>
+                    <div className="question-box">{question.question}</div>
+
+                    <div className="options">
+                      {Object.entries(question.options).map(([key, value]) => (
+                        <div
+                          key={key}
+                          className={getOptionClass(key)}
+                          onClick={() => !isSubmitted && setSelectedAnswer(key)}
+                        >
+                          <div className="option-key">{key}</div>
+                          <div className="option-text">{value}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {!isSubmitted ? (
                       <button
                         className="btn btn-primary"
-                        onClick={generateQuestion}
+                        onClick={handleSubmit}
+                        disabled={!selectedAnswer}
                       >
-                        Next
+                        Submit
                       </button>
-                      {isIncorrect && !showExplanation && (
+                    ) : (
+                      <div className="btn-row">
                         <button
-                          className="btn btn-warning"
-                          onClick={() => setShowExplanation(true)}
+                          className="btn btn-primary"
+                          onClick={generateQuestion}
                         >
-                          Get Help
+                          Next
                         </button>
-                      )}
-                    </>
-                  )}
-                </div>
+                        {isIncorrect && !showExplanation && (
+                          <button
+                            className="btn btn-warning"
+                            onClick={() => setShowExplanation(true)}
+                          >
+                            Get Help
+                          </button>
+                        )}
+                      </div>
+                    )}
 
-                {/* Result */}
-                {isSubmitted && (
+                    {isSubmitted && (
+                      <div
+                        className={`result ${selectedAnswer === question.correct ? "correct" : "incorrect"}`}
+                      >
+                        <div className="result-header">
+                          {selectedAnswer === question.correct
+                            ? "✓ Correct!"
+                            : `✗ Answer: ${question.correct}`}
+                        </div>
+                        <div className="result-text">
+                          {question.explanation}
+                        </div>
+                      </div>
+                    )}
+
+                    {showExplanation && isIncorrect && (
+                      <PersonalizedExplanation
+                        concept={selectedConcept}
+                        question={question.question}
+                        studentAnswer={selectedAnswer}
+                        correctAnswer={question.correct}
+                        options={question.options}
+                        historyId={currentHistoryId}
+                        onClose={() => setShowExplanation(false)}
+                      />
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* History Tab */}
+        {activeTab === "history" && (
+          <div style={{ maxWidth: 600 }}>
+            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16 }}>
+              Question History
+            </h2>
+            {history.length === 0 ? (
+              <div className="empty">
+                <div className="empty-icon">📝</div>
+                <p>No questions attempted yet</p>
+              </div>
+            ) : (
+              <div className="history-list">
+                {history.map((entry) => (
                   <div
-                    className={`result ${selectedAnswer === question.correct ? "correct" : "incorrect"}`}
+                    key={entry.id}
+                    className={`history-item ${entry.isCorrect ? "correct" : "incorrect"}`}
                   >
-                    <div className="result-header">
-                      <span className="result-icon">
-                        {selectedAnswer === question.correct ? "✓" : "✗"}
-                      </span>
-                      <span className="result-title">
-                        {selectedAnswer === question.correct
-                          ? "Correct!"
-                          : `Answer: ${question.correct}`}
-                      </span>
+                    <div className="history-icon">
+                      {entry.isCorrect ? "✓" : "✗"}
                     </div>
-                    <div className="result-text">{question.explanation}</div>
+                    <div className="history-info">
+                      <div className="history-concept">{entry.conceptName}</div>
+                      <div className="history-date">
+                        {new Date(entry.timestamp).toLocaleDateString()}
+                      </div>
+                    </div>
                   </div>
-                )}
-
-                {/* Personalized Explanation */}
-                {showExplanation && isIncorrect && (
-                  <PersonalizedExplanation
-                    concept={selectedConcept}
-                    question={question.question}
-                    studentAnswer={selectedAnswer}
-                    correctAnswer={question.correct}
-                    options={question.options}
-                    historyId={currentHistoryId}
-                    onClose={() => setShowExplanation(false)}
-                  />
-                )}
-              </>
+                ))}
+              </div>
             )}
           </div>
-        </div>
-      )}
+        )}
 
-      {/* History Tab */}
-      {activeTab === "history" && (
-        <div style={{ maxWidth: 600 }}>
-          <h2 className="section-title" style={{ marginBottom: 16 }}>
-            Question History
-          </h2>
-          {history.length === 0 ? (
-            <div className="empty">
-              <div className="empty-icon">📝</div>
-              <p className="empty-text">No questions attempted yet</p>
+        {/* Stats Tab */}
+        {activeTab === "stats" && stats && (
+          <div style={{ maxWidth: 600 }}>
+            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16 }}>
+              Statistics
+            </h2>
+            <div className="stats" style={{ gridTemplateColumns: "1fr 1fr" }}>
+              <div className="stat">
+                <div className="stat-label">Total Questions</div>
+                <div className="stat-value">{stats.totalAttempts}</div>
+              </div>
+              <div className="stat">
+                <div className="stat-label">Correct Answers</div>
+                <div className="stat-value green">{stats.totalCorrect}</div>
+              </div>
+              <div className="stat">
+                <div className="stat-label">Concepts Mastered</div>
+                <div className="stat-value blue">{stats.conceptsMastered}</div>
+              </div>
+              <div className="stat">
+                <div className="stat-label">Completion</div>
+                <div className="stat-value">{stats.progressPercent}%</div>
+              </div>
             </div>
-          ) : (
-            <div className="history-list">
-              {history.map((entry) => (
-                <div
-                  key={entry.id}
-                  className={`history-item ${entry.isCorrect ? "correct" : "incorrect"}`}
-                >
-                  <div className="history-icon">
-                    {entry.isCorrect ? "✓" : "✗"}
-                  </div>
-                  <div className="history-info">
-                    <div className="history-concept">{entry.conceptName}</div>
-                    <div className="history-date">
-                      {new Date(entry.timestamp).toLocaleDateString()}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Stats Tab */}
-      {activeTab === "stats" && stats && (
-        <div style={{ maxWidth: 600 }}>
-          <h2 className="section-title" style={{ marginBottom: 16 }}>
-            Statistics
-          </h2>
-          <div className="stats-bar" style={{ gridTemplateColumns: "1fr 1fr" }}>
-            <div className="stat-card">
-              <div className="stat-label">Total Questions</div>
-              <div className="stat-value">{stats.totalAttempts}</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-label">Correct Answers</div>
-              <div className="stat-value success">{stats.totalCorrect}</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-label">Concepts Mastered</div>
-              <div className="stat-value accent">{stats.conceptsMastered}</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-label">Completion</div>
-              <div className="stat-value">{stats.progressPercent}%</div>
-            </div>
+            <button
+              className="btn btn-secondary"
+              onClick={() => {
+                if (
+                  window.confirm("Reset all progress? This cannot be undone.")
+                ) {
+                  clearProgress();
+                  setRefreshKey((prev) => prev + 1);
+                }
+              }}
+              style={{ marginTop: 24, width: "auto" }}
+            >
+              Reset Progress
+            </button>
           </div>
-          <button
-            className="btn btn-secondary"
-            onClick={() => {
-              if (
-                window.confirm("Reset all progress? This cannot be undone.")
-              ) {
-                clearProgress();
-                setRefreshKey((prev) => prev + 1);
-              }
-            }}
-            style={{ marginTop: 24 }}
-          >
-            Reset Progress
-          </button>
-        </div>
-      )}
+        )}
+      </main>
 
       {/* Concept Review Modal */}
       {showReview && selectedConcept && (
